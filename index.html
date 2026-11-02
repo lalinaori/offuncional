@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OFFuncional - Gestão & Ergonomia</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #d94e28;
+      --primary-dark: #b83d1c;
+      --bg-color: #f4f5f7;
+      --card-bg: #ffffff;
+      --text-main: #2c3e50;
+      --text-muted: #7f8c8d;
+      --border-color: #e2e8f0;
+      --nav-height: 65px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: #1a1a1a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* Container do App */
+    .app-container {
+      width: 100%;
+      max-width: 420px;
+      height: 100vh;
+      max-height: 880px;
+      background-color: var(--bg-color);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      border-radius: 24px;
+    }
+
+    /* Cabeçalho */
+    .app-header {
+      background-color: var(--primary-color);
+      color: #ffffff;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      z-index: 10;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    .btn-add {
+      background: rgba(255, 255, 255, 0.25);
+      border: none;
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .btn-add:hover { background: rgba(255, 255, 255, 0.4); }
+
+    .search-box {
+      position: relative;
+      width: 100%;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 10px 14px 10px 38px;
+      border-radius: 10px;
+      border: none;
+      background-color: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .search-box input::placeholder {
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    /* Conteúdo Principal */
+    .app-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      padding-bottom: calc(var(--nav-height) + 20px);
+    }
+
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
+
+    .banner-card {
+      background: linear-gradient(135deg, #2c3e50, #4a6572);
+      color: white;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(217,78,40,0.3);
+    }
+
+    .grid-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .item-card {
+      background-color: var(--card-bg);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .item-card:active {
+      transform: scale(0.98);
+    }
+
+    .item-card img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      background-color: #eee;
+    }
+
+    .item-card-body {
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .item-card-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.2;
+    }
+
+    .item-card-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* Modais */
+    .detail-modal {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--card-bg);
+      z-index: 100;
+      display: none;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .detail-modal.active {
+      display: flex;
+    }
+
+    .detail-header {
+      position: relative;
+      width: 100%;
+      height: 200px;
+    }
+
+    .detail-header img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background-color: #e2e8f0;
+    }
+
+    .btn-back {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: rgba(0, 0, 0, 0.55);
+      color: white;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+    }
+
+    .detail-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .detail-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .detail-section {
+      border-top: 1px solid var(--border-color);
+      padding-top: 12px;
+    }
+
+    .detail-section-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .detail-section-content {
+      font-size: 0.95rem;
+      color: var(--text-main);
+      line-height: 1.45;
+      white-space: pre-line;
+    }
+
+    /* Formulários de Edição */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .form-group input, .form-group textarea {
+      padding: 10px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-family: inherit;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 70px;
+    }
+
+    /* Navegação Inferior */
+    .bottom-nav {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: var(--nav-height);
+      background-color: var(--card-bg);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 25%;
+    }
+
+    .nav-item i {
+      font-size: 1.25rem;
+    }
+
+    .nav-item.active {
+      color: var(--primary-color);
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Cabeçalho Dinâmico -->
+    <header class="app-header">
+      <div class="header-top">
+        <h1 class="header-title" id="page-title">Usuário</h1>
+        <button id="btn-header-action" class="btn-add" style="display: none;" onclick="abrirModalCriacao()">
+          <i class="fa-solid fa-plus"></i>
+        </button>
+      </div>
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="global-search" placeholder="Procurar..." onkeyup="filtrarItens()">
+      </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="app-content">
+      <!-- Aba 1: Usuário -->
+      <section id="tab-usuario" class="tab-pane active">
+        <div class="banner-card">
+          <h2>OFFuncional</h2>
+          <p style="font-size: 0.9rem; opacity: 0.85; margin-top: 6px;">Gestão de equipamentos, ergonomia e rotinas de higienização.</p>
+        </div>
+        <h3 style="margin-bottom: 12px; color: var(--text-main);">Perfil Ativo</h3>
+        <div id="lista-usuarios"></div>
+      </section>
+
+      <!-- Aba 2: Equipamentos -->
+      <section id="tab-equipamentos" class="tab-pane">
+        <div class="grid-cards" id="lista-equipamentos"></div>
+      </section>
+
+      <!-- Aba 3: Ergonomia -->
+      <section id="tab-ergonomia" class="tab-pane">
+        <div class="grid-cards" id="lista-ergonomia"></div>
+      </section>
+
+      <!-- Aba 4: Limpeza -->
+      <section id="tab-limpeza" class="tab-pane">
+        <div class="grid-cards" id="lista-limpeza"></div>
+      </section>
+    </main>
+
+    <!-- Modal de Visualização de Detalhes -->
+    <div id="detail-modal" class="detail-modal">
+      <div class="detail-header">
+        <button class="btn-back" onclick="fecharDetalhes()"><i class="fa-solid fa-arrow-left"></i></button>
+        <img id="modal-img-main" src="" alt="Foto" onerror="tratarErroImagem(this)">
+      </div>
+      <div class="detail-body" id="modal-body-content"></div>
+    </div>
+
+    <!-- Modal de Formulário (Criar / Editar) -->
+    <div id="form-modal" class="detail-modal">
+      <div style="padding: 16px 20px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between;">
+        <h3 id="form-modal-title" style="color: var(--text-main);">Editar Registro</h3>
+        <button class="btn-back" style="position: static;" onclick="fecharFormulario()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="detail-body" id="form-body-content"></div>
+    </div>
+
+    <!-- Navegação Inferior -->
+    <nav class="bottom-nav">
+      <button class="nav-item active" onclick="switchTab(event, 'usuario', 'Usuário')">
+        <i class="fa-solid fa-user"></i>
+        <span>Usuário</span>
+      </button>
+      <button class="nav-item" onclick="switchTab(event, 'equipamentos', 'Equipamentos')">
+        <i class="fa-solid fa-cubes"></i>
+        <span>Equipamentos</span>
+      </button>
+      <button class="nav-item" onclick="switchTab(event, 'ergonomia', 'Ergonomia')">
+        <i class="fa-solid fa-person-walking"></i>
+        <span>Ergonomia</span>
+      </button>
+      <button class="nav-item" onclick="switchTab(event, 'limpeza', 'Rotinas de Limpeza')">
+        <i class="fa-solid fa-pump-soap"></i>
+        <span>Limpeza</span>
+      </button>
+    </nav>
+  </div>
+
+<script>
+  // Imagem neutra caso ocorra erro 403/404 em links externos
+  const PLACEHOLDER_IMG = "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=400&auto=format&fit=crop&q=80";
+
+  function tratarErroImagem(img) {
+    img.onerror = null;
+    img.src = PLACEHOLDER_IMG;
+  }
+
+  // Dados padrão caso o localStorage esteja vazio
+  const dadosIniciais = {
+    usuario: {
+      nome: "Tainara Freitas",
+      email: "tainaracfreitas@gmail.com",
+      foto: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80"
+    },
+    equipamentos: [
+      {
+        id: "eq-1",
+        nome: "iVario (Rational)",
+        potencia: "(14 kW, trifásico)",
+        layout: "Requer ponto de água filtrada, ralo embutido ou grelha linear no piso. Exige coifa inercial devido ao vapor.",
+        foto: "https://www.rational-online.com/media/images/food/topshots-ivario/meat-ball-combi.jpg"
+      },
+      {
+        id: "eq-2",
+        nome: "Forno Combinado iCombi Pro (Rational)",
+        potencia: "~10,8 kW (Elétrico, trifásico)",
+        layout: "Necessita de ponto de água, esgoto de alta temperatura e exaustão. Mínimo de 10cm livres na lateral.",
+        foto: "https://cdn.b4c.inf.br/storage/narcel/1000/forno-combinado-icombi-classic-6-11-rational17931090327248670.jpeg"
+      },
+      {
+        id: "eq-3",
+        nome: "Chapa Elétrica Linha Gourmet 700",
+        potencia: "2,8 kW (220V Monofásico)",
+        layout: "Equipamento de bancada/parede. Exige coifa. Não deve ser posicionada junto a equipamentos de refrigeração.",
+        foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-chapa-eletrica-para-cozinha-industrial-linha-gourmet-700-400x750x280.png"
+      }
+    ],
+    ergonomia: [
+      {
+        id: "erg-1",
+        equipamento: "iVario (Rational)",
+        descricao: "Ergonomia de Cuba & Basculamento",
+        ergonomiaInstalacao: "Borda alinhada à altura da cintura (~90cm). Sistema de basculamento elétrico que elimina o içamento de panelas.",
+        medidasAntifadiga: "Reduz esforço lombar em até 80%. Recomenda-se piso antiderrapante com grelha linear rebaixada.",
+        fotoEquipamento: "https://www.rational-online.com/media/images/food/topshots-ivario/meat-ball-combi.jpg"
+      },
+      {
+        id: "erg-2",
+        equipamento: "Forno Combinado iCombi Pro",
+        descricao: "Acesso de Carga e Altura Segura",
+        ergonomiaInstalacao: "Última prateleira não deve ultrapassar 1,60m de altura, evitando acidentes com líquidos quentes.",
+        medidasAntifadiga: "Raio livre para abertura e recuo do cozinheiro ao liberar vapor, evitando estresse térmico facial.",
+        fotoEquipamento: "https://cdn.b4c.inf.br/storage/narcel/1000/forno-combinado-icombi-classic-6-11-rational17931090327248670.jpeg"
+      }
+    ],
+    limpeza: [
+      {
+        id: "limp-1",
+        equipamento: "iVario (Rational)",
+        frequencia: "Diária (após o uso)",
+        produtos: "Detergente neutro e esponja não abrasiva.",
+        pop: "1. Escoar líquidos pelo ralo embutido.\n2. Esfregar a cuba com detergente.\n3. Enxaguar com a ducha retrátil e secar.",
+        foto: "https://www.rational-online.com/media/images/food/topshots-ivario/meat-ball-combi.jpg"
+      },
+      {
+        id: "limp-2",
+        equipamento: "Forno Combinado iCombi Pro",
+        frequencia: "Diária (via sistema)",
+        produtos: "Pastilhas Active Green / Care RATIONAL.",
+        pop: "1. Selecionar o nível de limpeza no painel digital.\n2. Adicionar as pastilhas indicadas.\n3. Aguardar o ciclo autolimpante (iCareSystem).",
+        foto: "https://cdn.b4c.inf.br/storage/narcel/1000/forno-combinado-icombi-classic-6-11-rational17931090327248670.jpeg"
+      }
+    ]
+  };
+
+  // Carregar dados salvos ou inicializar o banco
+  function obterDB() {
+    const salvo = localStorage.getItem("offuncional_db");
+    if (!salvo) {
+      localStorage.setItem("offuncional_db", JSON.stringify(dadosIniciais));
+      return dadosIniciais;
+    }
+    return JSON.parse(salvo);
+  }
+
+  function salvarDB(db) {
+    localStorage.setItem("offuncional_db", JSON.stringify(db));
+  }
+
+  let currentTab = 'usuario';
+
+  // Alternar abas com evento explicitamente repassado
+  function switchTab(evt, tabId, title) {
+    currentTab = tabId;
+    document.getElementById('page-title').innerText = title;
+
+    // Atualizar botões inferiores
+    document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+    if (evt && evt.currentTarget) {
+      evt.currentTarget.classList.add('active');
+    }
+
+    // Alternar visibilidade das telas
+    document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+    document.getElementById(`tab-${tabId}`).classList.add('active');
+
+    // Botão de Adicionar no topo
+    const btnAdd = document.getElementById('btn-header-action');
+    btnAdd.style.display = (tabId === 'usuario') ? 'none' : 'flex';
+
+    document.getElementById('global-search').value = '';
+    renderizarAbaAtual();
+  }
+
+  // Renderizadores específicos (renderizam apenas quando necessário)
+  function renderUsuario() {
+    const db = obterDB();
+    const u = db.usuario;
+    document.getElementById('lista-usuarios').innerHTML = `
+      <div class="item-card" style="flex-direction: row; align-items: center; padding: 14px; gap: 14px;">
+        <img src="${u.foto}" onerror="tratarErroImagem(this)" style="width: 54px; height: 54px; border-radius: 50%; object-fit: cover;">
+        <div>
+          <div class="item-card-title">${u.nome}</div>
+          <div class="item-card-subtitle">${u.email}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderEquipamentos(filtro = '') {
+    const db = obterDB();
+    const lista = db.equipamentos.filter(e => 
+      e.nome.toLowerCase().includes(filtro.toLowerCase()) || 
+      e.potencia.toLowerCase().includes(filtro.toLowerCase())
+    );
+
+    document.getElementById('lista-equipamentos').innerHTML = lista.map(item => `
+      <div class="item-card" onclick="abrirDetalheEquipamento('${item.id}')">
+        <img src="${item.foto}" onerror="tratarErroImagem(this)">
+        <div class="item-card-body">
+          <div class="item-card-title">${item.nome}</div>
+          <div class="item-card-subtitle">${item.potencia}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderErgonomia(filtro = '') {
+    const db = obterDB();
+    const lista = db.ergonomia.filter(e => 
+      e.equipamento.toLowerCase().includes(filtro.toLowerCase()) || 
+      e.descricao.toLowerCase().includes(filtro.toLowerCase())
+    );
+
+    document.getElementById('lista-ergonomia').innerHTML = lista.map(item => `
+      <div class="item-card" onclick="abrirDetalheErgonomia('${item.id}')">
+        <img src="${item.fotoEquipamento}" onerror="tratarErroImagem(this)">
+        <div class="item-card-body">
+          <div class="item-card-title">${item.equipamento}</div>
+          <div class="item-card-subtitle">${item.descricao}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderLimpeza(filtro = '') {
+    const db = obterDB();
+    const lista = db.limpeza.filter(l => 
+      l.equipamento.toLowerCase().includes(filtro.toLowerCase()) || 
+      l.frequencia.toLowerCase().includes(filtro.toLowerCase())
+    );
+
+    document.getElementById('lista-limpeza').innerHTML = lista.map(item => `
+      <div class="item-card" onclick="abrirDetalheLimpeza('${item.id}')">
+        <img src="${item.foto}" onerror="tratarErroImagem(this)">
+        <div class="item-card-body">
+          <div class="item-card-title">${item.equipamento}</div>
+          <div class="item-card-subtitle">${item.frequencia}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderizarAbaAtual() {
+    if (currentTab === 'usuario') renderUsuario();
+    if (currentTab === 'equipamentos') renderEquipamentos();
+    if (currentTab === 'ergonomia') renderErgonomia();
+    if (currentTab === 'limpeza') renderLimpeza();
+  }
+
+  function filtrarItens() {
+    const termo = document.getElementById('global-search').value;
+    if (currentTab === 'equipamentos') renderEquipamentos(termo);
+    else if (currentTab === 'ergonomia') renderErgonomia(termo);
+    else if (currentTab === 'limpeza') renderLimpeza(termo);
+  }
+
+  // --- MODAIS DE DETALHE ---
+  function abrirDetalheEquipamento(id) {
+    const db = obterDB();
+    const item = db.equipamentos.find(e => e.id === id);
+    if (!item) return;
+
+    document.getElementById('modal-img-main').src = item.foto;
+    document.getElementById('modal-body-content').innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2 class="detail-title">${item.nome}</h2>
+        <button class="btn-action" onclick="editarEquipamento('${item.id}')"><i class="fa-solid fa-pen"></i> Editar</button>
+      </div>
+      <div class="detail-section">
+        <div class="detail-section-title">Potência</div>
+        <div class="detail-section-content">${item.potencia}</div>
+      </div>
+      <div class="detail-section">
+        <div class="detail-section-title">Exigências de Layout</div>
+        <div class="detail-section-content">${item.layout}</div>
+      </div>
+    `;
+    document.getElementById('detail-modal').classList.add('active');
+  }
+
+  function abrirDetalheErgonomia(id) {
+    const db = obterDB();
+    const item = db.ergonomia.find(e => e.id === id);
+    if (!item) return;
+
+    document.getElementById('modal-img-main').src = item.fotoEquipamento;
+    document.getElementById('modal-body-content').innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2 class="detail-title">${item.equipamento}</h2>
+      </div>
+      <p style="color:var(--text-muted); font-size: 0.9rem;">${item.descricao}</p>
+      <div class="detail-section">
+        <div class="detail-section-title">Ergonomia de Instalação</div>
+        <div class="detail-section-content">${item.ergonomiaInstalacao}</div>
+      </div>
+      <div class="detail-section">
+        <div class="detail-section-title">Medidas Antifadiga</div>
+        <div class="detail-section-content">${item.medidasAntifadiga}</div>
+      </div>
+    `;
+    document.getElementById('detail-modal').classList.add('active');
+  }
+
+  function abrirDetalheLimpeza(id) {
+    const db = obterDB();
+    const item = db.limpeza.find(l => l.id === id);
+    if (!item) return;
+
+    document.getElementById('modal-img-main').src = item.foto;
+    document.getElementById('modal-body-content').innerHTML = `
+      <h2 class="detail-title">${item.equipamento}</h2>
+      <div class="detail-section">
+        <div class="detail-section-title">Frequência</div>
+        <div class="detail-section-content">${item.frequencia}</div>
+      </div>
+      <div class="detail-section">
+        <div class="detail-section-title">Produtos Indicados</div>
+        <div class="detail-section-content">${item.produtos}</div>
+      </div>
+      <div class="detail-section">
+        <div class="detail-section-title">Procedimento Operacional Padrão (POP)</div>
+        <div class="detail-section-content">${item.pop}</div>
+      </div>
+    `;
+    document.getElementById('detail-modal').classList.add('active');
+  }
+
+  function fecharDetalhes() {
+    document.getElementById('detail-modal').classList.remove('active');
+  }
+
+  // --- MODAL DE EDIÇÃO / CRIAÇÃO ---
+  function editarEquipamento(id) {
+    fecharDetalhes();
+    const db = obterDB();
+    const item = db.equipamentos.find(e => e.id === id);
+    if (!item) return;
+
+    document.getElementById('form-modal-title').innerText = "Editar Equipamento";
+    document.getElementById('form-body-content').innerHTML = `
+      <div class="form-group">
+        <label>Nome do Equipamento</label>
+        <input type="text" id="edit-nome" value="${item.nome}">
+      </div>
+      <div class="form-group">
+        <label>Potência / Consumo</label>
+        <input type="text" id="edit-potencia" value="${item.potencia}">
+      </div>
+      <div class="form-group">
+        <label>URL da Imagem</label>
+        <input type="text" id="edit-foto" value="${item.foto}">
+      </div>
+      <div class="form-group">
+        <label>Exigências de Layout</label>
+        <textarea id="edit-layout">${item.layout}</textarea>
+      </div>
+      <button class="btn-action" style="justify-content:center; margin-top:12px;" onclick="salvarEdicaoEquipamento('${item.id}')">
+        <i class="fa-solid fa-check"></i> Salvar Alterações
+      </button>
+    `;
+    document.getElementById('form-modal').classList.add('active');
+  }
+
+  function salvarEdicaoEquipamento(id) {
+    const db = obterDB();
+    const item = db.equipamentos.find(e => e.id === id);
+    if (!item) return;
+
+    item.nome = document.getElementById('edit-nome').value.trim();
+    item.potencia = document.getElementById('edit-potencia').value.trim();
+    item.foto = document.getElementById('edit-foto').value.trim() || PLACEHOLDER_IMG;
+    item.layout = document.getElementById('edit-layout').value.trim();
+
+    salvarDB(db);
+    fecharFormulario();
+    renderEquipamentos();
+  }
+
+  function abrirModalCriacao() {
+    if (currentTab === 'equipamentos') {
+      document.getElementById('form-modal-title').innerText = "Novo Equipamento";
+      document.getElementById('form-body-content').innerHTML = `
+        <div class="form-group">
+          <label>Nome do Equipamento</label>
+          <input type="text" id="novo-nome" placeholder="Ex: Forno Convector">
+        </div>
+        <div class="form-group">
+          <label>Potência</label>
+          <input type="text" id="novo-potencia" placeholder="Ex: 5 kW / 220V">
+        </div>
+        <div class="form-group">
+          <label>URL da Imagem</label>
+          <input type="text" id="novo-foto" placeholder="https://...">
+        </div>
+        <div class="form-group">
+          <label>Exigências de Layout</label>
+          <textarea id="novo-layout" placeholder="Pontos de gás, exaustão, tomadas..."></textarea>
+        </div>
+        <button class="btn-action" style="justify-content:center; margin-top:12px;" onclick="salvarNovoEquipamento()">
+          <i class="fa-solid fa-plus"></i> Cadastrar Equipamento
+        </button>
+      `;
+      document.getElementById('form-modal').classList.add('active');
+    } else {
+      alert("Para cadastrar novos itens nesta aba, você pode expandir a mesma lógica do formulário!");
+    }
+  }
+
+  function salvarNovoEquipamento() {
+    const nome = document.getElementById('novo-nome').value.trim();
+    if (!nome) {
+      alert("Por favor, preencha pelo menos o nome do equipamento.");
+      return;
+    }
+
+    const db = obterDB();
+    db.equipamentos.push({
+      id: "eq-" + Date.now(),
+      nome: nome,
+      potencia: document.getElementById('novo-potencia').value.trim() || "Não informada",
+      foto: document.getElementById('novo-foto').value.trim() || PLACEHOLDER_IMG,
+      layout: document.getElementById('novo-layout').value.trim() || "Sem exigências cadastradas."
+    });
+
+    salvarDB(db);
+    fecharFormulario();
+    renderEquipamentos();
+  }
+
+  function fecharFormulario() {
+    document.getElementById('form-modal').classList.remove('active');
+  }
+
+  // Inicialização
+  window.onload = function() {
+    renderizarAbaAtual();
+  };
+</script>
+</body>
+</html>
