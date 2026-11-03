@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OFFuncional - Gestão & Ergonomia</title>
   
-  <!-- Configurações PWA (Microsoft / Android) -->
+  <!-- Configurações PWA -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#d94e28">
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js');
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
       });
     }
   </script>
@@ -44,7 +44,6 @@
       min-height: 100vh;
     }
 
-    /* Container do App */
     .app-container {
       width: 100%;
       max-width: 420px;
@@ -59,7 +58,6 @@
       border-radius: 24px;
     }
 
-    /* Cabeçalho */
     .app-header {
       background-color: var(--primary-color);
       color: #ffffff;
@@ -110,7 +108,6 @@
       color: rgba(255, 255, 255, 0.75);
     }
 
-    /* Área Principal */
     .app-content {
       flex: 1;
       overflow-y: auto;
@@ -197,7 +194,6 @@
       color: var(--text-muted);
     }
 
-    /* Modal de Detalhes */
     .detail-modal {
       position: absolute;
       top: 0;
@@ -290,7 +286,6 @@
       display: block;
     }
 
-    /* Menu de Navegação Inferior */
     .bottom-nav {
       position: absolute;
       bottom: 0;
@@ -333,7 +328,6 @@
 <body>
 
   <div class="app-container">
-    <!-- Cabeçalho -->
     <header class="app-header">
       <div class="header-top">
         <h1 class="header-title" id="page-title">Usuário</h1>
@@ -344,13 +338,12 @@
       </div>
     </header>
 
-    <!-- Área de Conteúdo -->
     <main class="app-content">
       <!-- Aba 1: Usuário -->
       <section id="tab-usuario" class="tab-pane active">
         <div class="banner-card">
           <h2>Bem Vindo ao OFFuncional</h2>
-          <button class="btn-action"><i class="fa-solid fa-rocket"></i> Vamos lá!</button>
+          <button class="btn-action" onclick="switchTab('equipamentos', 'Equipamentos')"><i class="fa-solid fa-rocket"></i> Vamos lá!</button>
         </div>
         <h3 style="margin-bottom: 12px; color: var(--text-main);">Usuários</h3>
         <div id="lista-usuarios"></div>
@@ -383,19 +376,19 @@
 
     <!-- Navegação Inferior -->
     <nav class="bottom-nav">
-      <button class="nav-item active" onclick="switchTab(event, 'usuario', 'Usuário')">
+      <button class="nav-item active" id="btn-nav-usuario" onclick="switchTab('usuario', 'Usuário')">
         <i class="fa-solid fa-user"></i>
         <span>Usuário</span>
       </button>
-      <button class="nav-item" onclick="switchTab(event, 'equipamentos', 'Equipamentos')">
+      <button class="nav-item" id="btn-nav-equipamentos" onclick="switchTab('equipamentos', 'Equipamentos')">
         <i class="fa-solid fa-database"></i>
         <span>Equipamentos</span>
       </button>
-      <button class="nav-item" onclick="switchTab(event, 'ergonomia', 'Ergonomia')">
+      <button class="nav-item" id="btn-nav-ergonomia" onclick="switchTab('ergonomia', 'Ergonomia')">
         <i class="fa-solid fa-border-all"></i>
         <span>Ergonomia</span>
       </button>
-      <button class="nav-item" onclick="switchTab(event, 'limpeza', 'Rotinas de Limpeza')">
+      <button class="nav-item" id="btn-nav-limpeza" onclick="switchTab('limpeza', 'Rotinas de Limpeza')">
         <i class="fa-solid fa-clipboard-check"></i>
         <span>Rotinas de Limpeza</span>
       </button>
@@ -410,7 +403,6 @@
     img.src = PLACEHOLDER_IMG;
   }
 
-  // BANCO DE DADOS COMPLETO - OS 5 EQUIPAMENTOS ORIGINAIS
   const dbApp = {
     usuario: {
       nome: "Tainara Freitas",
@@ -512,4 +504,267 @@
         equipamento: "iVario (Rational)",
         frequencia: "Diária (após o uso)",
         produtos: "Detergente neutro, esponja não abrasiva.",
-        pop: "1. Escoar líquidos pelo ralo embutido.\n2. Esfregar a cuba com detergente.\n3. Enxaguar usando a ducha retrá
+        pop: "1. Escoar líquidos pelo ralo embutido.\n2. Esfregar a cuba com detergente.\n3. Enxaguar usando a ducha retrátil.\n4. Secar e deixar a tampa semiaberta.",
+        foto: "https://www.rational-online.com/media/images/food/topshots-ivario/meat-ball-combi.jpg"
+      },
+      {
+        id: "limp-2",
+        equipamento: "Forno Combinado iCombi Pro 6-1/1 (Rational)",
+        frequencia: "Diária (via sistema)",
+        produtos: "Pastilhas Active Green e Care RATIONAL.",
+        pop: "1. Selecionar nível de sujeira no painel.\n2. Inserir pastilhas conforme indicado no visor (fluxo limpo, sem contato com sujidade pesada).\n3. Aguardar ciclo autolimpante (iCareSystem).\n4. Retirar resíduos retidos no filtro da calha.",
+        foto: "https://cdn.b4c.inf.br/storage/narcel/1000/forno-combinado-icombi-classic-6-11-rational17931090327248670.jpeg"
+      },
+      {
+        id: "limp-3",
+        equipamento: "Chapa Elétrica Linha Gourmet 700 (Alfatec)",
+        frequencia: "Diária (e entre rodadas)",
+        produtos: "Desengordurante específico, espátula.",
+        pop: "1. Raspar resíduos sólidos a quente para a gaveta coletora.\n2. Aplicar desengordurante (chapa morna) e esfregar.\n3. Remover resíduos com pano úmido (levar pano à rota de lavagem).\n4. Secar e untar com óleo.",
+        foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-chapa-eletrica-para-cozinha-industrial-linha-gourmet-700-400x750x280.png"
+      },
+      {
+        id: "limp-4",
+        equipamento: "Char Broiler a Gás Linha Stark 900 (Alfatec)",
+        frequencia: "Diária",
+        produtos: "Escova com cerdas de aço, desengordurante.",
+        pop: "1. Queimar resíduos (pirólise).\n2. Escovar as grelhas para remover carbonização.\n3. Retirar grelhas, defletores e gaveta e levar à pia de lavagem pesada (fluxo sujo).\n4. Secar e remontar na área de cocção (área limpa).",
+        foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-char-broiler-a-gas-para-cozinha-industrial-linha-stark-900-450x980x240.png"
+      },
+      {
+        id: "limp-5",
+        equipamento: "Fogão a Gás com Forno Stark (Alfatec)",
+        frequencia: "Diária",
+        produtos: "Detergente, desengordurante, esponjas.",
+        pop: "1. Retirar grelhas e queimadores; levar para imersão (fluxo sujo).\n2. Limpar a mesa do fogão e o interior do forno.\n3. Desobstruir bicos injetores.\n4. Enxaguar, secar e remontar tudo.",
+        foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-fogao-a-gas-com-forno-para-cozinha-industrial-linha-stark-900-1800x980x900.png"
+      }
+    ]
+  };
+
+  let currentTab = 'usuario';
+
+  function switchTab(tabId, title) {
+    currentTab = tabId;
+    var pageTitle = document.getElementById('page-title');
+    if (pageTitle) pageTitle.innerText = title;
+
+    document.querySelectorAll('.nav-item').forEach(function(btn) {
+      btn.classList.remove('active');
+    });
+
+    var targetBtn = document.getElementById('btn-nav-' + tabId);
+    if (targetBtn) {
+      targetBtn.classList.add('active');
+    }
+
+    document.querySelectorAll('.tab-pane').forEach(function(pane) {
+      pane.classList.remove('active');
+    });
+
+    var targetPane = document.getElementById('tab-' + tabId);
+    if (targetPane) {
+      targetPane.classList.add('active');
+    }
+
+    var searchInput = document.getElementById('global-search');
+    if (searchInput) searchInput.value = '';
+
+    renderizarAbas();
+  }
+
+  function renderUsuario() {
+    var container = document.getElementById('lista-usuarios');
+    if (!container) return;
+    var u = dbApp.usuario;
+    container.innerHTML = `
+      <div class="item-card" style="flex-direction: row; align-items: center; padding: 12px; gap: 12px;">
+        <img src="${u.foto}" onerror="tratarErroImagem(this)" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
+        <div>
+          <div class="item-card-title">${u.nome}</div>
+          <div class="item-card-subtitle">${u.email}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderEquipamentos(filtro) {
+    var container = document.getElementById('lista-equipamentos');
+    if (!container) return;
+    filtro = filtro || '';
+    var itens = dbApp.equipamentos.filter(function(item) {
+      return item.nome.toLowerCase().includes(filtro.toLowerCase()) || 
+             item.potencia.toLowerCase().includes(filtro.toLowerCase());
+    });
+
+    container.innerHTML = itens.map(function(item) {
+      return `
+        <div class="item-card" onclick="abrirDetalheEquipamento('${item.id}')">
+          <img src="${item.foto}" onerror="tratarErroImagem(this)" alt="${item.nome}">
+          <div class="item-card-body">
+            <div class="item-card-title">${item.nome}</div>
+            <div class="item-card-subtitle">${item.potencia}</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function renderErgonomia(filtro) {
+    var container = document.getElementById('lista-ergonomia');
+    if (!container) return;
+    filtro = filtro || '';
+    var itens = dbApp.ergonomia.filter(function(item) {
+      return item.equipamento.toLowerCase().includes(filtro.toLowerCase()) || 
+             item.descricao.toLowerCase().includes(filtro.toLowerCase());
+    });
+
+    container.innerHTML = itens.map(function(item) {
+      return `
+        <div class="item-card" onclick="abrirDetalheErgonomia('${item.id}')">
+          <img src="${item.fotoEquipamento}" onerror="tratarErroImagem(this)" alt="${item.equipamento}">
+          <div class="item-card-body">
+            <div class="item-card-title">${item.equipamento}</div>
+            <div class="item-card-subtitle">${item.descricao}</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function renderLimpeza(filtro) {
+    var container = document.getElementById('lista-limpeza');
+    if (!container) return;
+    filtro = filtro || '';
+    var itens = dbApp.limpeza.filter(function(item) {
+      return item.equipamento.toLowerCase().includes(filtro.toLowerCase()) || 
+             item.frequencia.toLowerCase().includes(filtro.toLowerCase());
+    });
+
+    container.innerHTML = itens.map(function(item) {
+      return `
+        <div class="item-card" onclick="abrirDetalheLimpeza('${item.id}')">
+          <img src="${item.foto}" onerror="tratarErroImagem(this)" alt="${item.equipamento}">
+          <div class="item-card-body">
+            <div class="item-card-title">${item.equipamento}</div>
+            <div class="item-card-subtitle">${item.frequencia}</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function filtrarItens() {
+    var termo = document.getElementById('global-search').value;
+    if (currentTab === 'equipamentos') renderEquipamentos(termo);
+    else if (currentTab === 'ergonomia') renderErgonomia(termo);
+    else if (currentTab === 'limpeza') renderLimpeza(termo);
+  }
+
+  function renderizarAbas() {
+    renderUsuario();
+    renderEquipamentos();
+    renderErgonomia();
+    renderLimpeza();
+  }
+
+  function abrirDetalheEquipamento(id) {
+    var item = dbApp.equipamentos.find(function(e) { return e.id === id; });
+    if (!item) return;
+
+    document.getElementById('modal-img-main').src = item.foto;
+    document.getElementById('modal-body-content').innerHTML = `
+      <h2 class="detail-title">${item.nome}</h2>
+      
+      <div class="detail-section">
+        <div class="detail-section-title">Potência</div>
+        <div class="detail-section-content">${item.potencia}</div>
+      </div>
+
+      <div class="detail-section">
+        <div class="detail-section-title">Exigências de Layout</div>
+        <div class="detail-section-content">${item.layout}</div>
+      </div>
+
+      <div class="detail-section">
+        <div class="detail-section-title">Link da Foto</div>
+        <div class="detail-section-content">
+          <a href="${item.foto}" target="_blank" style="color: var(--primary-color); word-break: break-all;">${item.foto}</a>
+        </div>
+      </div>
+    `;
+
+    document.getElementById('detail-modal').classList.add('active');
+  }
+
+  function abrirDetalheErgonomia(id) {
+    var item = dbApp.ergonomia.find(function(e) { return e.id === id; });
+    if (!item) return;
+
+    document.getElementById('modal-img-main').src = item.fotoEquipamento;
+    document.getElementById('modal-body-content').innerHTML = `
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2 class="detail-title">${item.descricao}</h2>
+      </div>
+      <div style="color: var(--text-muted); font-size: 0.9rem;">Equipamento: <strong>${item.equipamento}</strong></div>
+
+      <div class="detail-section">
+        <h3 style="font-size: 1.1rem; color: var(--text-main); margin-bottom: 8px;">Ergonomia de Instalação</h3>
+        <div class="detail-img-box">
+          <img src="${item.imgErgonomia}" onerror="tratarErroImagem(this)" alt="Ergonomia de Instalação">
+        </div>
+        <div class="detail-section-content" style="margin-top: 10px;">${item.ergonomiaInstalacao}</div>
+      </div>
+
+      <div class="detail-section">
+        <h3 style="font-size: 1.1rem; color: var(--text-main); margin-bottom: 8px;">Medidas Antifadiga e Conforto</h3>
+        <div class="detail-img-box">
+          <img src="${item.imgConforto}" onerror="tratarErroImagem(this)" alt="Medidas Antifadiga">
+        </div>
+        <div class="detail-section-content" style="margin-top: 10px;">${item.medidasAntifadiga}</div>
+      </div>
+    `;
+
+    document.getElementById('detail-modal').classList.add('active');
+  }
+
+  function abrirDetalheLimpeza(id) {
+    var item = dbApp.limpeza.find(function(l) { return l.id === id; });
+    if (!item) return;
+
+    document.getElementById('modal-img-main').src = item.foto;
+    document.getElementById('modal-body-content').innerHTML = `
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2 class="detail-title">${item.equipamento}</h2>
+      </div>
+      <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 8px;">Rotina de Limpeza</div>
+
+      <div class="detail-section">
+        <div class="detail-section-title">Frequência</div>
+        <div class="detail-section-content">${item.frequencia}</div>
+      </div>
+
+      <div class="detail-section">
+        <div class="detail-section-title">Produtos Indicados</div>
+        <div class="detail-section-content">${item.produtos}</div>
+      </div>
+
+      <div class="detail-section">
+        <div class="detail-section-title">POP (Procedimento Operacional Padrão) - Fluxo</div>
+        <div class="detail-section-content">${item.pop}</div>
+      </div>
+    `;
+
+    document.getElementById('detail-modal').classList.add('active');
+  }
+
+  function fecharDetalhes() {
+    document.getElementById('detail-modal').classList.remove('active');
+  }
+
+  // Executa imediatamente assim que a página é lida
+  renderizarAbas();
+</script>
+
+</body>
+</html>
