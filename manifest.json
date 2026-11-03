@@ -18,16 +18,22 @@
   ],
   "icons": [
     {
-      "src": "https://cdn.jsdelivr.net/gh/Edward-Ji/essentials-of-microeconomics@master/www/android-chrome-192x192.png",
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Twemoji_1f373.svg/192px-Twemoji_1f373.svg.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "https://cdn.jsdelivr.net/gh/Edward-Ji/essentials-of-microeconomics@master/www/android-chrome-512x512.png",
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Twemoji_1f373.svg/512px-Twemoji_1f373.svg.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Twemoji_1f373.svg/512px-Twemoji_1f373.svg.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }
