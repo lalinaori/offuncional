@@ -1,18 +1,13 @@
 {
-  "id": "offuncional-gestao-ergonomia",
+  "id": "offuncional-app",
   "name": "OFFuncional - Gestão & Ergonomia",
   "short_name": "OFFuncional",
-  "description": "Aplicativo de gestão de equipamentos industriais, ergonomia operacional e procedimentos operacionais padrão (POP) de higienização.",
+  "description": "Gestão de equipamentos industriais, ergonomia operacional (NR-17) e rotinas de higienização (RDC 216) para cozinhas profissionais.",
   "lang": "pt-BR",
   "dir": "ltr",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "display_override": [
-    "window-controls-overlay",
-    "standalone",
-    "minimal-ui"
-  ],
   "orientation": "portrait",
   "background_color": "#f4f5f7",
   "theme_color": "#d94e28",
@@ -21,78 +16,24 @@
     "productivity",
     "utilities"
   ],
-  "launch_handler": {
-    "client_mode": "navigate-existing"
-  },
-  "edge_side_panel": {
-    "preferred_width": 420
-  },
-  "shortcuts": [
-    {
-      "name": "Equipamentos",
-      "short_name": "Equipamentos",
-      "description": "Acessar ficha técnica e layouts",
-      "url": "./index.html#equipamentos",
-      "icons": [
-        {
-          "src": "https://cdn-icons-png.flaticon.com/192/1046/1046774.png",
-          "sizes": "192x192"
-        }
-      ]
-    },
-    {
-      "name": "Ergonomia",
-      "short_name": "Ergonomia",
-      "description": "Normas e medidas antifadiga",
-      "url": "./index.html#ergonomia",
-      "icons": [
-        {
-          "src": "https://cdn-icons-png.flaticon.com/192/1046/1046774.png",
-          "sizes": "192x192"
-        }
-      ]
-    },
-    {
-      "name": "Rotinas de Limpeza",
-      "short_name": "Limpeza",
-      "description": "Procedimentos de higienização (POP)",
-      "url": "./index.html#limpeza",
-      "icons": [
-        {
-          "src": "https://cdn-icons-png.flaticon.com/192/1046/1046774.png",
-          "sizes": "192x192"
-        }
-      ]
-    }
-  ],
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/1046/1046774.png",
+      "src": "https://api.iconify.design/noto:cooking.svg",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/svg+xml",
+      "purpose": "any"
     },
     {
-      "src": "https://cdn-icons-png.flaticon.com/192/1046/1046774.png",
+      "src": "https://api.iconify.design/noto:cooking.svg",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ],
-  "screenshots": [
-    {
-      "src": "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=1080&auto=format&fit=crop&q=80",
-      "sizes": "1080x1920",
-      "type": "image/jpeg",
-      "form_factor": "narrow",
-      "label": "Tela do Aplicativo no Smartphone"
+      "type": "image/svg+xml",
+      "purpose": "any"
     },
     {
-      "src": "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=1920&auto=format&fit=crop&q=80",
-      "sizes": "1920x1080",
-      "type": "image/jpeg",
-      "form_factor": "wide",
-      "label": "Visão Geral dos Equipamentos"
+      "src": "https://api.iconify.design/noto:cooking.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
     }
   ]
 }
