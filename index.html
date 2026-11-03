@@ -7,6 +7,8 @@
   
   <!-- Configurações PWA -->
   <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1046/1046774.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#d94e28">
   <script>
     if ('serviceWorker' in navigator) {
@@ -76,7 +78,7 @@
     }
 
     .header-title {
-      font-size: 1.35rem;
+      font-size: 1.4rem;
       font-weight: 700;
     }
 
@@ -129,33 +131,8 @@
       color: white;
       border-radius: 16px;
       padding: 20px;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    .info-card {
-      background-color: var(--card-bg);
-      border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 16px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      border-left: 4px solid var(--primary-color);
-    }
-
-    .info-card-title {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .info-card-text {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      line-height: 1.4;
     }
 
     .btn-action {
@@ -175,14 +152,15 @@
 
     .badge-norma {
       display: inline-block;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       background-color: #fef3c7;
       color: #92400e;
       font-weight: 700;
-      padding: 3px 8px;
+      padding: 2px 7px;
       border-radius: 6px;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
       text-transform: uppercase;
+      width: fit-content;
     }
 
     .grid-cards {
@@ -221,14 +199,14 @@
     }
 
     .item-card-title {
-      font-size: 0.92rem;
+      font-size: 0.95rem;
       font-weight: 700;
       color: var(--text-main);
       line-height: 1.2;
     }
 
     .item-card-subtitle {
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
     }
 
@@ -298,18 +276,18 @@
     }
 
     .detail-section-title {
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       color: var(--text-muted);
       margin-bottom: 6px;
-      font-weight: 700;
+      font-weight: 600;
     }
 
     .detail-section-content {
-      font-size: 0.92rem;
+      font-size: 0.95rem;
       color: var(--text-main);
-      line-height: 1.45;
+      line-height: 1.4;
       white-space: pre-line;
     }
 
@@ -346,7 +324,7 @@
       gap: 4px;
       color: var(--text-muted);
       text-decoration: none;
-      font-size: 0.72rem;
+      font-size: 0.75rem;
       font-weight: 500;
       cursor: pointer;
       border: none;
@@ -397,68 +375,39 @@
   <div class="app-container">
     <header class="app-header">
       <div class="header-top">
-        <h1 class="header-title" id="page-title">Diretrizes de OFF</h1>
+        <h1 class="header-title" id="page-title">Usuário</h1>
       </div>
       <div class="search-box">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" id="global-search" placeholder="Procurar equipamento, POP, norma..." onkeyup="filtrarItens()">
+        <input type="text" id="global-search" placeholder="Procurar..." onkeyup="filtrarItens()">
       </div>
     </header>
 
     <main class="app-content" id="app-main-content">
-      <!-- Aba 1: Diretrizes de OFF -->
+      <!-- Aba 1: Usuário (Limpa como no layout original da Tainara) -->
       <section id="tab-usuario" class="tab-pane active">
         <div class="banner-card">
-          <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9;">Organização Físico-Funcional</span>
-          <h2 style="margin-top: 4px;">OFFuncional</h2>
-          <p style="font-size: 0.85rem; opacity: 0.9; margin-top: 6px;">Gestão técnica de fluxo linear, ergonomia (NR-17) e biossegurança (RDC 216) para cozinhas industriais.</p>
-          <button class="btn-action" onclick="window.switchTab('equipamentos', 'Equipamentos (5)')">
-            <i class="fa-solid fa-fire-burner"></i> Acessar Equipamentos
+          <h2>Bem Vindo ao OFFuncional</h2>
+          <button class="btn-action" onclick="window.switchTab('equipamentos', 'Equipamentos')">
+            <i class="fa-solid fa-rocket"></i> Vamos lá!
           </button>
         </div>
-
-        <div class="info-card">
-          <div class="info-card-title"><i class="fa-solid fa-arrows-turn-to-dots" style="color: var(--primary-color);"></i> Princípio da Marcha para a Frente</div>
-          <div class="info-card-text">
-            O layout operacional foi dimensionado em <strong>fluxo contínuo unidirecional</strong>: Pré-preparo ➔ Ilha de Cocção ➔ Distribuição. Evita o cruzamento de matérias-primas com alimentos prontos, eliminando riscos de contaminação cruzada.
-          </div>
-        </div>
-
-        <div class="info-card">
-          <div class="info-card-title"><i class="fa-solid fa-ruler-combined" style="color: var(--primary-color);"></i> Dimensionamento e Ambiência</div>
-          <div class="info-card-text">
-            Circulação mínima de 1,20m a 1,50m entre bancadas, coifas de captação inercial dimensionadas para troca térmica massiva e pisos com grelha linear sifonada de fácil higienização.
-          </div>
-        </div>
-
-        <h3 style="margin-bottom: 12px; color: var(--text-main); font-size: 1.05rem;">Equipe do Projeto</h3>
+        <h3 style="margin-bottom: 12px; color: var(--text-main);">Usuários</h3>
         <div id="lista-usuarios" style="display: flex; flex-direction: column; gap: 10px;"></div>
       </section>
 
       <!-- Aba 2: Equipamentos -->
       <section id="tab-equipamentos" class="tab-pane">
-        <div class="info-card" style="margin-bottom: 12px;">
-          <div class="info-card-title"><i class="fa-solid fa-layer-group" style="color: var(--primary-color);"></i> 5 Funções Térmicas Integradas</div>
-          <div class="info-card-text">Cada equipamento cumpre uma função térmica específica na ilha de cocção, maximizando a produtividade por m² com controle rigoroso de exaustão.</div>
-        </div>
         <div class="grid-cards" id="lista-equipamentos"></div>
       </section>
 
-      <!-- Aba 3: Ergonomia (NR-17) -->
+      <!-- Aba 3: Ergonomia -->
       <section id="tab-ergonomia" class="tab-pane">
-        <div class="info-card" style="margin-bottom: 12px;">
-          <div class="info-card-title"><i class="fa-solid fa-person-running" style="color: var(--primary-color);"></i> Conformidade com a NR-17</div>
-          <div class="info-card-text">Medidas antropométricas de altura de bancadas (90-95cm), raio de alcance seguro (40cm) e eliminação de elevação de cargas acima de 1,60m para mitigação de LER/DORT.</div>
-        </div>
         <div class="grid-cards" id="lista-ergonomia"></div>
       </section>
 
-      <!-- Aba 4: Rotinas de Limpeza (RDC 216 ANVISA) -->
+      <!-- Aba 4: Rotinas de Limpeza -->
       <section id="tab-limpeza" class="tab-pane">
-        <div class="info-card" style="margin-bottom: 12px;">
-          <div class="info-card-title"><i class="fa-solid fa-shield-halved" style="color: var(--primary-color);"></i> POPs - RDC 216 / ANVISA</div>
-          <div class="info-card-text">Procedimentos Operacionais Padrão obrigatórios: higienização mecânica, sanitização química e separação de rotas de lavagem pesada (fluxo sujo).</div>
-        </div>
         <div class="grid-cards" id="lista-limpeza"></div>
       </section>
     </main>
@@ -472,23 +421,23 @@
       <div class="detail-body" id="modal-body-content"></div>
     </div>
 
-    <!-- Navegação Inferior -->
+    <!-- Navegação Inferior Original -->
     <nav class="bottom-nav">
-      <button class="nav-item active" id="btn-nav-usuario" onclick="window.switchTab('usuario', 'Diretrizes de OFF')">
-        <i class="fa-solid fa-compass-drafting"></i>
-        <span>Diretrizes</span>
+      <button class="nav-item active" id="btn-nav-usuario" onclick="window.switchTab('usuario', 'Usuário')">
+        <i class="fa-solid fa-user"></i>
+        <span>Usuário</span>
       </button>
-      <button class="nav-item" id="btn-nav-equipamentos" onclick="window.switchTab('equipamentos', 'Equipamentos (5)')">
-        <i class="fa-solid fa-cubes"></i>
+      <button class="nav-item" id="btn-nav-equipamentos" onclick="window.switchTab('equipamentos', 'Equipamentos')">
+        <i class="fa-solid fa-database"></i>
         <span>Equipamentos</span>
       </button>
-      <button class="nav-item" id="btn-nav-ergonomia" onclick="window.switchTab('ergonomia', 'Ergonomia (NR-17)')">
-        <i class="fa-solid fa-person-walking"></i>
+      <button class="nav-item" id="btn-nav-ergonomia" onclick="window.switchTab('ergonomia', 'Ergonomia')">
+        <i class="fa-solid fa-border-all"></i>
         <span>Ergonomia</span>
       </button>
-      <button class="nav-item" id="btn-nav-limpeza" onclick="window.switchTab('limpeza', 'POPs (RDC 216)')">
-        <i class="fa-solid fa-pump-soap"></i>
-        <span>POPs Sanitários</span>
+      <button class="nav-item" id="btn-nav-limpeza" onclick="window.switchTab('limpeza', 'Rotinas de Limpeza')">
+        <i class="fa-solid fa-clipboard-check"></i>
+        <span>Rotinas de Limp...</span>
       </button>
     </nav>
   </div>
@@ -506,13 +455,13 @@
       {
         nome: "Tainara Freitas",
         email: "tainaracfreitas@gmail.com",
-        cargo: "Idealização, Pesquisa & Projeto Original",
+        cargo: "Idealização & Projeto Original",
         foto: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80"
       },
       {
-        nome: "Lina Orí", // <--- COLOQUE SEU NOME AQUI
-        email: "lalinaori@gmail.com", // <--- COLOQUE SEU E-MAIL AQUI
-        cargo: "Adaptação para App, Suporte & Revisão",
+        nome: "Lina Orí", // <--- CONFIRA SEU NOME AQUI
+        email: "lalinaori@gmail.com", // <--- CONFIRA SEU E-MAIL AQUI
+        cargo: "Adaptação Mobile & Suporte",
         foto: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&auto=format&fit=crop&q=80"
       }
     ],
@@ -521,45 +470,40 @@
         id: "eq-1",
         nome: "iVario (Rational)",
         funcao: "Cocção Multifuncional & Fervura",
-        potencia: "14 kW, trifásico (Alto rendimento)",
-        layout: "Posicionamento central em ilha térmica. Requer ponto de água filtrada fria, ralo sifonado embutido ou grelha linear de piso para escoamento rápido. Exige coifa com filtro inercial devido ao alto volume de vapor de condensação.",
-        fluxo: "Interface direta entre pré-preparo de vegetais/carnes e a distribuição de caldos e guisados.",
+        potencia: "( 14 kW, trifásico)",
+        layout: "Requer ponto de água filtrada, ralo embutido ou grelha linear no piso. Exige coifa inercial devido ao vapor. Deve ficar na área central (ilha), facilitando a circulação e o fluxo linear (Marcha para a Frente).",
         foto: "https://www.rational-online.com/media/images/food/topshots-ivario/meat-ball-combi.jpg"
       },
       {
         id: "eq-2",
         nome: "Forno Combinado iCombi Pro 6-1/1 (Rational)",
-        funcao: "Vapor Saturado, Convecção Seca & Combinado",
+        funcao: "Vapor & Convecção Combinada",
         potencia: "~10,8 kW (Elétrico, trifásico)",
-        layout: "Exige ponto de água tratada (abrandada), esgoto resistente a alta temperatura (>80°C) e sistema de exaustão mecânica. Distância mínima de 1,5m da bancada de empratamento e recuo lateral de 10cm para ventilação técnica.",
-        fluxo: "Área de cocção fina; abastece diretamente o balcão térmico de distribuição (passe).",
+        layout: "Necessita de ponto de água, esgoto para alta temperatura e exaustão. Posicionamento a 1,5m da bancada de apoio, mínimo de 10cm na lateral esquerda para manutenção.",
         foto: "https://cdn.b4c.inf.br/storage/narcel/1000/forno-combinado-icombi-classic-6-11-rational17931090327248670.jpeg"
       },
       {
         id: "eq-3",
         nome: "Chapa Elétrica Linha Gourmet 700 (Alfatec)",
-        funcao: "Cocção por Contato Direto & Selamento",
+        funcao: "Cocção por Contato Direto",
         potencia: "2,8 kW (220V Monofásico)",
-        layout: "Equipamento modular de bancada ou parede de cocção. Exige coifa com calha coletora de gordura. Jamais instalar encostada em módulos refrigerados (geladeiras) para evitar choque térmico e sobreconsumo de energia.",
-        fluxo: "Estação de finalização rápida; fluxo linear direto para empratamento.",
+        layout: "Equipamento de bancada/parede. Exige coifa. Não deve ser posicionado ao lado de equipamentos de refrigeração para evitar troca térmica no layout.",
         foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-chapa-eletrica-para-cozinha-industrial-linha-gourmet-700-400x750x280.png"
       },
       {
         id: "eq-4",
         nome: "Char Broiler À Gás Linha Stark 900 (Alfatec)",
-        funcao: "Grelhados Radiantes de Alta Temperatura",
+        funcao: "Grelhados Radiantes",
         potencia: "9.569 kcal/h (GLP) 1 queimador",
-        layout: "Obrigatório coifa de exaustão de alta vazão (norma NBR 14518) devido à fumaça pesada e gordura atomizada. Ponto de gás GLP com válvula de corte rápido e piso lavável antiderrapante.",
-        fluxo: "Setor de carnes; recebe proteínas diretamente do pré-preparo de carnes vermelhas.",
+        layout: "Obrigatório sistema de exaustão de alta vazão (fumaça radiante - NBR 14518). Ponto de gás com válvula de corte rápido acessível.",
         foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-char-broiler-a-gas-para-cozinha-industrial-linha-stark-900-450x980x240.png"
       },
       {
         id: "eq-5",
         nome: "Fogão a Gás com Forno Stark (Alfatec)",
-        funcao: "Cocção Pesada Tradicional & Cocção de Base",
+        funcao: "Cocção Tradicional & Forno",
         potencia: "37.299 kcal/h (GLP) 4 bocas",
-        layout: "Equipamento de alta carga térmica. Exige coifa perimetral ampla com reposição de ar externo. Tubulação de gás dedicada com manômetro e declividade de piso com grelha linear para lavagem pesada.",
-        fluxo: "Centro de produção de bases, molhos e caldeirões da cozinha quente.",
+        layout: "Exige coifa de exaustão de grande porte. Requer tubulação de GLP dedicada e piso com inclinação e ralo próximo para facilitar a higienização.",
         foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-fogao-a-gas-com-forno-para-cozinha-industrial-linha-stark-900-1800x980x900.png"
       }
     ],
@@ -567,103 +511,103 @@
       {
         id: "erg-1",
         equipamento: "iVario (Rational)",
-        norma: "NR-17 - Ergonomia Operacional",
-        descricao: "Basculamento Motorizado e Redução de Carga Lombar",
+        norma: "NR-17 (Ergonomia)",
+        descricao: "Ergonomia e Conforto",
         fotoEquipamento: "https://www.rational-online.com/media/images/food/topshots-ivario/meat-ball-combi.jpg",
         imgErgonomia: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTZt-E4kcWmUBT5eaj6tfUXnWNvUf4CbPX_Y6sgsPhewL6g5fI",
-        ergonomiaInstalacao: "Borda superior alinhada ao plano de cintura do operador (~90cm). O sistema eletromecânico de basculamento descarrega preparações pesadas diretamente em cubas GN sobre carrinhos, eliminando a elevação manual de caldeirões volumosos.",
+        ergonomiaInstalacao: "Borda da cuba alinhada à altura da cintura (~90cm). Sistema de basculamento elétrico elimina o levantamento manual de panelas pesadas. Painel na altura dos olhos e ducha na altura das mãos.",
         imgConforto: "https://img.magnific.com/vetores-gratis/colecao-de-culinaria-de-pessoas_52683-9462.jpg?semt=ais_hybrid&w=740&q=80",
-        medidasAntifadiga: "Mitigação de sobrecarga em coluna L4-L5 em 80%. Operação com painel touchscreen angulado e ducha de higienização retrátil para evitar giros forçados de tronco."
+        medidasAntifadiga: "Evita rotação de tronco; basculamento reduz esforço lombar em 80%. Piso antiderrapante com grelha linear rebaixada na frente."
       },
       {
         id: "erg-2",
         equipamento: "Forno Combinado iCombi Pro 6-1/1 (Rational)",
-        norma: "NR-17 - Prevenção de Queimaduras e LER/DORT",
-        descricao: "Altura Limite de Carga e Alívio Térmico Facial",
+        norma: "NR-17 (Ergonomia)",
+        descricao: "Ergonomia e Conforto",
         fotoEquipamento: "https://cdn.b4c.inf.br/storage/narcel/1000/forno-combinado-icombi-classic-6-11-rational17931090327248670.jpeg",
         imgErgonomia: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTZt-E4kcWmUBT5eaj6tfUXnWNvUf4CbPX_Y6sgsPhewL6g5fI",
-        ergonomiaInstalacao: "Instalação sobre base de apoio projetada para que a última assadeira (guia superior) não ultrapasse 1,60m de altura, garantindo contato visual total e transporte de líquidos quentes na altura do tórax.",
+        ergonomiaInstalacao: "Uso de suporte/base para que a última prateleira não ultrapasse 1,60m de altura, permitindo visão e manuseio seguro de assadeiras pesadas na altura do peito.",
         imgConforto: "https://img.magnific.com/vetores-gratis/colecao-de-culinaria-de-pessoas_52683-9462.jpg?semt=ais_hybrid&w=740&q=80",
-        medidasAntifadiga: "Abertura de porta em 2 estágios para dispersão de vapor quente antes da retirada das bandejas, evitando estresse térmico ocular e facial."
+        medidasAntifadiga: "Raio de abertura da porta livre para recuo do cozinheiro durante escape de vapor; reduz estresse térmico facial."
       },
       {
         id: "erg-3",
         equipamento: "Chapa Elétrica Linha Gourmet 700 (Alfatec)",
-        norma: "NR-17 - Postura Estática e Raio de Alcance",
-        descricao: "Altura da Superfície e Alívio de Membros Inferiores",
+        norma: "NR-17 (Ergonomia)",
+        descricao: "Ergonomia e Conforto",
         fotoEquipamento: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-chapa-eletrica-para-cozinha-industrial-linha-gourmet-700-400x750x280.png",
         imgErgonomia: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTZt-E4kcWmUBT5eaj6tfUXnWNvUf4CbPX_Y6sgsPhewL6g5fI",
-        ergonomiaInstalacao: "Mesa da chapa posicionada a 90cm - 95cm do piso. A organização dos insumos de alto giro deve respeitar a faixa de alcance ótimo (primeiros 40cm da borda), evitando hiperextensão contínua de ombros.",
+        ergonomiaInstalacao: "Superfície da chapa posicionada a 90cm - 95cm do piso. Concentrar itens de alto giro na faixa frontal (primeiros 40cm) para evitar hiperextensão de braços.",
         imgConforto: "https://img.magnific.com/vetores-gratis/colecao-de-culinaria-de-pessoas_52683-9462.jpg?semt=ais_hybrid&w=740&q=80",
-        medidasAntifadiga: "Obrigatoriedade de tapete ergonômico antiestresse/antifadiga emborrachado para operadores que permanecem em bipedestação prolongada."
+        medidasAntifadiga: "Uso de tapete ergonômico emborrachado na frente da estação de chapeiro para diminuir fadiga de membros inferiores em pé."
       },
       {
         id: "erg-4",
         equipamento: "Char Broiler À Gás Linha Stark 900 (Alfatec)",
-        norma: "NR-17 & NR-15 - Conforto Térmico e Radiação",
-        descricao: "Proteção contra Calor Radiante e Ferramental Longo",
+        norma: "NR-17 (Ergonomia)",
+        descricao: "Ergonomia e Conforto",
         fotoEquipamento: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-char-broiler-a-gas-para-cozinha-industrial-linha-stark-900-450x980x240.png",
         imgErgonomia: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTZt-E4kcWmUBT5eaj6tfUXnWNvUf4CbPX_Y6sgsPhewL6g5fI",
-        ergonomiaInstalacao: "Área livre acima do equipamento sem prateleiras intermediárias, impedindo movimentos de braços sobre o calor radiante. Uso de pinças gastronômicas de cabo longo (35 a 40cm).",
+        ergonomiaInstalacao: "Instalação sem prateleiras suspensas acima para evitar esticar braços sobre grelha quente. Uso obrigatório de pinças e espátulas de cabo longo (35-40cm).",
         imgConforto: "https://img.magnific.com/vetores-gratis/colecao-de-culinaria-de-pessoas_52683-9462.jpg?semt=ais_hybrid&w=740&q=80",
-        medidasAntifadiga: "Insuflamento focado de ar tratado de reposição climatizado para equilibrar a sobrecarga térmica (IBUTG) do operador."
+        medidasAntifadiga: "Insuflamento de ar fresco focado no operador para compensar o calor radiante massivo do carvão vulcânico/gás."
       },
       {
         id: "erg-5",
         equipamento: "Fogão a Gás com Forno Stark (Alfatec)",
-        norma: "NR-17 - Movimentação e Deslizamento Seguro",
-        descricao: "Nivelamento Horizontal e Agachamento Guiado",
+        norma: "NR-17 (Ergonomia)",
+        descricao: "Ergonomia e Conforto",
         fotoEquipamento: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-fogao-a-gas-com-forno-para-cozinha-industrial-linha-stark-900-1800x980x900.png",
         imgErgonomia: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTZt-E4kcWmUBT5eaj6tfUXnWNvUf4CbPX_Y6sgsPhewL6g5fI",
-        ergonomiaInstalacao: "Grelhas pesadas de ferro fundido com encaixe contínuo e nivelado, permitindo arrastar caldeirões e panelas entre bocas sem necessidade de elevação vertical.",
+        ergonomiaInstalacao: "Grelhas de ferro perfeitamente niveladas para deslizar panelas pesadas sem içar. Espaço livre frontal de 1m para agachamento com flexão de joelhos ao usar o forno.",
         imgConforto: "https://img.magnific.com/vetores-gratis/colecao-de-culinaria-de-pessoas_52683-9462.jpg?semt=ais_hybrid&w=740&q=80",
-        medidasAntifadiga: "Raio livre frontal de 1,00m para permitir agachamento com flexão de joelhos ao utilizar o forno inferior, protegendo a curvatura lordótica lombar."
+        medidasAntifadiga: "Redução do esforço de elevação ao mover caldeirões entre bocas no mesmo plano horizontal."
       }
     ],
     limpeza: [
       {
         id: "limp-1",
         equipamento: "iVario (Rational)",
-        norma: "RDC 216 / ANVISA - POP 01 (Higienização de Equipamentos)",
-        frequencia: "Diária (ao término de cada turno operacional)",
-        produtos: "Detergente neutro biodegradável e fibra macia (não abrasiva).",
-        pop: "1. Descarregar os resíduos alimentares pelo ralo automático da cuba.\n2. Aplicar detergente neutro e higienizar internamente as paredes térmicas.\n3. Enxaguar abundantemente utilizando a ducha integrada retrátil.\n4. Secar com panos descartáveis de uso único e manter tampa semiaberta para circulação de ar.",
+        norma: "RDC 216 / ANVISA",
+        frequencia: "Diária (após o uso)",
+        produtos: "Detergente neutro, esponja não abrasiva.",
+        pop: "1. Escoar líquidos pelo ralo embutido.\n2. Esfregar a cuba com detergente.\n3. Enxaguar usando a ducha retrátil.\n4. Secar e deixar a tampa semiaberta.",
         foto: "https://www.rational-online.com/media/images/food/topshots-ivario/meat-ball-combi.jpg"
       },
       {
         id: "limp-2",
         equipamento: "Forno Combinado iCombi Pro 6-1/1 (Rational)",
-        norma: "RDC 216 / ANVISA - POP 01 (Ciclo Fechado Autolimpante)",
-        frequencia: "Diária / Automática programada",
-        produtos: "Pastilhas sólidas de limpeza ativa (Active Green) e descalcificante (Care).",
-        pop: "1. Selecionar o nível de higienização de acordo com o biofilme acumulado no painel digital.\n2. Inserir as pastilhas nos compartimentos internos indicados.\n3. Iniciar o ciclo hermético iCareSystem (lavagem, desinfecção térmica e enxágue automático).\n4. Retirar, lavar e desobstruir o filtro da calha de condensação na pia de lavagem.",
+        norma: "RDC 216 / ANVISA",
+        frequencia: "Diária (via sistema)",
+        produtos: "Pastilhas Active Green e Care RATIONAL.",
+        pop: "1. Selecionar nível de sujeira no painel.\n2. Inserir pastilhas conforme indicado no visor (fluxo limpo, sem contato com sujidade pesada).\n3. Aguardar ciclo autolimpante (iCareSystem).\n4. Retirar resíduos retidos no filtro da calha.",
         foto: "https://cdn.b4c.inf.br/storage/narcel/1000/forno-combinado-icombi-classic-6-11-rational17931090327248670.jpeg"
       },
       {
         id: "limp-3",
         equipamento: "Chapa Elétrica Linha Gourmet 700 (Alfatec)",
-        norma: "RDC 216 / ANVISA - POP 02 (Desengorduramento e Controle de Resíduos)",
-        frequencia: "Entre trocas de cardápio e diária profunda",
-        produtos: "Detergente desengordurante alcalino específico e espátula raspadora em inox.",
-        pop: "1. Raspar resíduos carbonizados com a chapa ainda morna direcionando para a gaveta coletora.\n2. Aplicar solução desengordurante e agir por 5 minutos.\n3. Remover resíduos com água morna e recolher no fluxo sujo de lavagem.\n4. Secar e aplicar camada fina de óleo mineral protetivo contra oxidação.",
+        norma: "RDC 216 / ANVISA",
+        frequencia: "Diária (e entre rodadas)",
+        produtos: "Desengordurante específico, espátula.",
+        pop: "1. Raspar resíduos sólidos a quente para a gaveta coletora.\n2. Aplicar desengordurante (chapa morna) e esfregar.\n3. Remover resíduos com pano úmido (levar pano à rota de lavagem).\n4. Secar e untar com óleo.",
         foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-chapa-eletrica-para-cozinha-industrial-linha-gourmet-700-400x750x280.png"
       },
       {
         id: "limp-4",
         equipamento: "Char Broiler a Gás Linha Stark 900 (Alfatec)",
-        norma: "RDC 216 / ANVISA - POP 03 (Higienização Pesada e Pirólise)",
-        frequencia: "Diária após o encerramento do serviço",
-        produtos: "Escova de aço inox, desengordurante cáustico e água sob pressão.",
-        pop: "1. Realizar queima residual dos restos orgânicos nas grelhas (pirólise).\n2. Escovar as grelhas para remoção de incrustações minerais e carbonizadas.\n3. Desmontar grelhas, defletores e bandeja e transportar em caixas plásticas até o setor de lavagem pesada (evitando gotejamento no chão da área limpa).\n4. Sanitizar, enxaguar e remontar na área de cocção.",
+        norma: "RDC 216 / ANVISA",
+        frequencia: "Diária",
+        produtos: "Escova com cerdas de aço, desengordurante.",
+        pop: "1. Queimar resíduos (pirólise).\n2. Escovar as grelhas para remover carbonização.\n3. Retirar grelhas, defletores e gaveta e levar à pia de lavagem pesada (fluxo sujo).\n4. Secar e remontar na área de cocção (área limpa).",
         foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-char-broiler-a-gas-para-cozinha-industrial-linha-stark-900-450x980x240.png"
       },
       {
         id: "limp-5",
         equipamento: "Fogão a Gás com Forno Stark (Alfatec)",
-        norma: "RDC 216 / ANVISA - POP 04 (Desobstrução e Imersão Química)",
-        frequencia: "Diária (mesa e fornos) / Semanal (queimadores)",
-        produtos: "Detergente desengordurante, esponjas abrasivas e agulha desobstruidora.",
-        pop: "1. Retirar trempes e queimadores e encaminhar para tanque de imersão desengordurante.\n2. Limpar a mesa de inox, fundo do forno e bandejas coletoras de respingos.\n3. Desobstruir orifícios dos injetores de gás para manter chama azul eficiente.\n4. Secar todas as peças e remontar, testando a vedação dos queimadores.",
+        norma: "RDC 216 / ANVISA",
+        frequencia: "Diária",
+        produtos: "Detergente, desengordurante, esponjas.",
+        pop: "1. Retirar grelhas e queimadores; levar para imersão (fluxo sujo).\n2. Limpar a mesa do fogão e o interior do forno.\n3. Desobstruir bicos injetores.\n4. Enxaguar, secar e remontar tudo.",
         foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-fogao-a-gas-com-forno-para-cozinha-industrial-linha-stark-900-1800x980x900.png"
       }
     ]
@@ -672,7 +616,6 @@
   let currentTab = 'usuario';
 
   window.switchTab = function(tabId, title, fromHistory) {
-    // Se algum modal de detalhe estiver aberto ao trocar de aba, fecha ele
     var modal = document.getElementById('detail-modal');
     if (modal && modal.classList.contains('active')) {
       modal.classList.remove('active');
@@ -706,7 +649,6 @@
     var searchInput = document.getElementById('global-search');
     if (searchInput) searchInput.value = '';
 
-    // Registra a troca de aba no histórico do Android para o botão Voltar funcionar
     if (!fromHistory && tabId !== 'usuario') {
       try {
         history.pushState({ tab: tabId, title: title, modal: false }, '');
@@ -721,8 +663,8 @@
     if (!container) return;
     container.innerHTML = dbApp.usuarios.map(function(u) {
       return `
-        <div class="item-card" style="flex-direction: row; align-items: center; padding: 12px; gap: 12px;">
-          <img src="${u.foto}" onerror="tratarErroImagem(this)" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover;">
+        <div class="item-card" onclick="window.switchTab('equipamentos', 'Equipamentos')" style="flex-direction: row; align-items: center; padding: 12px; gap: 12px;">
+          <img src="${u.foto}" onerror="tratarErroImagem(this)" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
           <div>
             <div class="item-card-title">${u.nome}</div>
             <div class="item-card-subtitle">${u.email}</div>
@@ -739,7 +681,6 @@
     filtro = filtro || '';
     var itens = dbApp.equipamentos.filter(function(item) {
       return item.nome.toLowerCase().includes(filtro.toLowerCase()) || 
-             item.funcao.toLowerCase().includes(filtro.toLowerCase()) ||
              item.potencia.toLowerCase().includes(filtro.toLowerCase());
     });
 
@@ -749,7 +690,6 @@
           <img src="${item.foto}" onerror="tratarErroImagem(this)" alt="${item.nome}">
           <div class="item-card-body">
             <div class="item-card-title">${item.nome}</div>
-            <div class="item-card-subtitle" style="color: var(--primary-color); font-weight: 600;">${item.funcao}</div>
             <div class="item-card-subtitle">${item.potencia}</div>
           </div>
         </div>
@@ -763,8 +703,7 @@
     filtro = filtro || '';
     var itens = dbApp.ergonomia.filter(function(item) {
       return item.equipamento.toLowerCase().includes(filtro.toLowerCase()) || 
-             item.descricao.toLowerCase().includes(filtro.toLowerCase()) ||
-             item.norma.toLowerCase().includes(filtro.toLowerCase());
+             item.descricao.toLowerCase().includes(filtro.toLowerCase());
     });
 
     container.innerHTML = itens.map(function(item) {
@@ -772,7 +711,7 @@
         <div class="item-card" onclick="abrirDetalheErgonomia('${item.id}')">
           <img src="${item.fotoEquipamento}" onerror="tratarErroImagem(this)" alt="${item.equipamento}">
           <div class="item-card-body">
-            <span class="badge-norma">NR-17</span>
+            <span class="badge-norma">${item.norma}</span>
             <div class="item-card-title">${item.equipamento}</div>
             <div class="item-card-subtitle">${item.descricao}</div>
           </div>
@@ -787,7 +726,6 @@
     filtro = filtro || '';
     var itens = dbApp.limpeza.filter(function(item) {
       return item.equipamento.toLowerCase().includes(filtro.toLowerCase()) || 
-             item.norma.toLowerCase().includes(filtro.toLowerCase()) ||
              item.frequencia.toLowerCase().includes(filtro.toLowerCase());
     });
 
@@ -796,7 +734,7 @@
         <div class="item-card" onclick="abrirDetalheLimpeza('${item.id}')">
           <img src="${item.foto}" onerror="tratarErroImagem(this)" alt="${item.equipamento}">
           <div class="item-card-body">
-            <span class="badge-norma" style="background-color: #d1fae5; color: #065f46;">ANVISA</span>
+            <span class="badge-norma" style="background-color: #d1fae5; color: #065f46;">${item.norma}</span>
             <div class="item-card-title">${item.equipamento}</div>
             <div class="item-card-subtitle">${item.frequencia}</div>
           </div>
@@ -837,21 +775,22 @@
     document.getElementById('modal-img-main').src = item.foto;
     document.getElementById('modal-body-content').innerHTML = `
       <h2 class="detail-title">${item.nome}</h2>
-      <div style="color: var(--primary-color); font-weight: 700; font-size: 0.95rem;">${item.funcao}</div>
       
       <div class="detail-section">
-        <div class="detail-section-title">Potência & Consumo</div>
+        <div class="detail-section-title">Potência</div>
         <div class="detail-section-content">${item.potencia}</div>
       </div>
 
       <div class="detail-section">
-        <div class="detail-section-title">Layout & Instalação Hidráulica/Térmica</div>
+        <div class="detail-section-title">Exigências de Layout (Fluxo & OFF)</div>
         <div class="detail-section-content">${item.layout}</div>
       </div>
 
       <div class="detail-section">
-        <div class="detail-section-title">Integração no Fluxo de Produção</div>
-        <div class="detail-section-content">${item.fluxo}</div>
+        <div class="detail-section-title">Link da Foto</div>
+        <div class="detail-section-content">
+          <a href="${item.foto}" target="_blank" style="color: var(--primary-color); word-break: break-all;">${item.foto}</a>
+        </div>
       </div>
     `;
 
@@ -864,12 +803,12 @@
 
     document.getElementById('modal-img-main').src = item.fotoEquipamento;
     document.getElementById('modal-body-content').innerHTML = `
-      <span class="badge-norma" style="width: fit-content;">${item.norma}</span>
+      <span class="badge-norma">${item.norma}</span>
       <h2 class="detail-title">${item.descricao}</h2>
       <div style="color: var(--text-muted); font-size: 0.9rem;">Equipamento: <strong>${item.equipamento}</strong></div>
 
       <div class="detail-section">
-        <h3 style="font-size: 1.05rem; color: var(--text-main); margin-bottom: 8px;">Conformidade Ergonômica de Instalação</h3>
+        <h3 style="font-size: 1.1rem; color: var(--text-main); margin-bottom: 8px;">Ergonomia de Instalação</h3>
         <div class="detail-img-box">
           <img src="${item.imgErgonomia}" onerror="tratarErroImagem(this)" alt="Ergonomia de Instalação">
         </div>
@@ -877,7 +816,7 @@
       </div>
 
       <div class="detail-section">
-        <h3 style="font-size: 1.05rem; color: var(--text-main); margin-bottom: 8px;">Medidas Antifadiga e Prevenção de DORT</h3>
+        <h3 style="font-size: 1.1rem; color: var(--text-main); margin-bottom: 8px;">Medidas Antifadiga e Conforto</h3>
         <div class="detail-img-box">
           <img src="${item.imgConforto}" onerror="tratarErroImagem(this)" alt="Medidas Antifadiga">
         </div>
@@ -894,21 +833,22 @@
 
     document.getElementById('modal-img-main').src = item.foto;
     document.getElementById('modal-body-content').innerHTML = `
-      <span class="badge-norma" style="background-color: #d1fae5; color: #065f46; width: fit-content;">${item.norma}</span>
+      <span class="badge-norma" style="background-color: #d1fae5; color: #065f46;">${item.norma}</span>
       <h2 class="detail-title">${item.equipamento}</h2>
-      
+      <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 8px;">Rotina de Limpeza</div>
+
       <div class="detail-section">
-        <div class="detail-section-title">Frequência Obrigatória</div>
+        <div class="detail-section-title">Frequência</div>
         <div class="detail-section-content">${item.frequencia}</div>
       </div>
 
       <div class="detail-section">
-        <div class="detail-section-title">Insumos Químicos e Utensílios</div>
+        <div class="detail-section-title">Produtos Indicados</div>
         <div class="detail-section-content">${item.produtos}</div>
       </div>
 
       <div class="detail-section">
-        <div class="detail-section-title">Passo a Passo Operacional (POP)</div>
+        <div class="detail-section-title">POP (Procedimento Operacional Padrão) - Fluxo</div>
         <div class="detail-section-content">${item.pop}</div>
       </div>
     `;
@@ -928,7 +868,6 @@
     }
   }
 
-  // Intercepta o botão físico/gesto nativo de "Voltar" do Android (Navegador, PWA e APK)
   window.addEventListener('popstate', function(event) {
     var modal = document.getElementById('detail-modal');
     if (modal && modal.classList.contains('active')) {
@@ -938,11 +877,10 @@
     if (event.state && event.state.tab) {
       window.switchTab(event.state.tab, event.state.title || 'OFFuncional', true);
     } else if (currentTab !== 'usuario') {
-      window.switchTab('usuario', 'Diretrizes de OFF', true);
+      window.switchTab('usuario', 'Usuário', true);
     }
   });
 
-  // Suporte adicional para o evento nativo do Cordova no APK Offline
   document.addEventListener('backbutton', function(e) {
     var modal = document.getElementById('detail-modal');
     if (modal && modal.classList.contains('active')) {
@@ -950,7 +888,7 @@
       fecharDetalhes(true);
     } else if (currentTab !== 'usuario') {
       e.preventDefault();
-      window.switchTab('usuario', 'Diretrizes de OFF', true);
+      window.switchTab('usuario', 'Usuário', true);
     }
   }, false);
 
