@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OFFuncional - Gestão & Ergonomia</title>
+  
+  <!-- Configurações PWA (Microsoft / Android) -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#d94e28">
   <script>
@@ -10,9 +15,7 @@
       });
     }
   </script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OFFuncional - Gestão & Ergonomia</title>
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
@@ -75,24 +78,9 @@
     }
 
     .header-title {
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       font-weight: 700;
     }
-
-    .btn-add {
-      background: rgba(255, 255, 255, 0.25);
-      border: none;
-      color: white;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s;
-    }
-    .btn-add:hover { background: rgba(255, 255, 255, 0.4); }
 
     .search-box {
       position: relative;
@@ -122,7 +110,7 @@
       color: rgba(255, 255, 255, 0.75);
     }
 
-    /* Conteúdo Principal */
+    /* Área Principal */
     .app-content {
       flex: 1;
       overflow-y: auto;
@@ -153,12 +141,13 @@
       gap: 8px;
       background-color: var(--primary-color);
       color: white;
-      padding: 8px 16px;
+      padding: 10px 18px;
       border-radius: 20px;
       border: none;
       font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 2px 6px rgba(217,78,40,0.3);
+      margin-top: 12px;
+      box-shadow: 0 2px 6px rgba(217,78,40,0.4);
     }
 
     .grid-cards {
@@ -197,18 +186,18 @@
     }
 
     .item-card-title {
-      font-size: 0.92rem;
+      font-size: 0.95rem;
       font-weight: 700;
       color: var(--text-main);
       line-height: 1.2;
     }
 
     .item-card-subtitle {
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
     }
 
-    /* Modais */
+    /* Modal de Detalhes */
     .detail-modal {
       position: absolute;
       top: 0;
@@ -229,21 +218,21 @@
     .detail-header {
       position: relative;
       width: 100%;
-      height: 200px;
+      height: 220px;
     }
 
     .detail-header img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      background-color: #e2e8f0;
+      background-color: #eee;
     }
 
     .btn-back {
       position: absolute;
       top: 16px;
       left: 16px;
-      background: rgba(0, 0, 0, 0.55);
+      background: rgba(0, 0, 0, 0.5);
       color: white;
       border: none;
       width: 36px;
@@ -264,7 +253,7 @@
     }
 
     .detail-title {
-      font-size: 1.25rem;
+      font-size: 1.3rem;
       font-weight: 700;
       color: var(--text-main);
     }
@@ -275,49 +264,33 @@
     }
 
     .detail-section-title {
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       color: var(--text-muted);
       margin-bottom: 6px;
-      font-weight: 600;
     }
 
     .detail-section-content {
       font-size: 0.95rem;
       color: var(--text-main);
-      line-height: 1.45;
+      line-height: 1.4;
       white-space: pre-line;
     }
 
-    /* Formulários de Edição */
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-bottom: 12px;
+    .detail-img-box {
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 8px;
     }
 
-    .form-group label {
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--text-muted);
+    .detail-img-box img {
+      width: 100%;
+      display: block;
     }
 
-    .form-group input, .form-group textarea {
-      padding: 10px 12px;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      font-size: 0.9rem;
-      font-family: inherit;
-    }
-
-    .form-group textarea {
-      resize: vertical;
-      min-height: 70px;
-    }
-
-    /* Navegação Inferior */
+    /* Menu de Navegação Inferior */
     .bottom-nav {
       position: absolute;
       bottom: 0;
@@ -338,7 +311,8 @@
       align-items: center;
       gap: 4px;
       color: var(--text-muted);
-      font-size: 0.72rem;
+      text-decoration: none;
+      font-size: 0.75rem;
       font-weight: 500;
       cursor: pointer;
       border: none;
@@ -359,13 +333,10 @@
 <body>
 
   <div class="app-container">
-    <!-- Cabeçalho Dinâmico -->
+    <!-- Cabeçalho -->
     <header class="app-header">
       <div class="header-top">
         <h1 class="header-title" id="page-title">Usuário</h1>
-        <button id="btn-header-action" class="btn-add" style="display: none;" onclick="abrirModalCriacao()">
-          <i class="fa-solid fa-plus"></i>
-        </button>
       </div>
       <div class="search-box">
         <i class="fa-solid fa-magnifying-glass"></i>
@@ -373,15 +344,15 @@
       </div>
     </header>
 
-    <!-- Conteúdo Principal -->
+    <!-- Área de Conteúdo -->
     <main class="app-content">
       <!-- Aba 1: Usuário -->
       <section id="tab-usuario" class="tab-pane active">
         <div class="banner-card">
-          <h2>OFFuncional</h2>
-          <p style="font-size: 0.9rem; opacity: 0.85; margin-top: 6px;">Gestão de equipamentos, ergonomia e rotinas de higienização.</p>
+          <h2>Bem Vindo ao OFFuncional</h2>
+          <button class="btn-action"><i class="fa-solid fa-rocket"></i> Vamos lá!</button>
         </div>
-        <h3 style="margin-bottom: 12px; color: var(--text-main);">Perfil Ativo</h3>
+        <h3 style="margin-bottom: 12px; color: var(--text-main);">Usuários</h3>
         <div id="lista-usuarios"></div>
       </section>
 
@@ -395,28 +366,19 @@
         <div class="grid-cards" id="lista-ergonomia"></div>
       </section>
 
-      <!-- Aba 4: Limpeza -->
+      <!-- Aba 4: Rotinas de Limpeza -->
       <section id="tab-limpeza" class="tab-pane">
         <div class="grid-cards" id="lista-limpeza"></div>
       </section>
     </main>
 
-    <!-- Modal de Visualização de Detalhes -->
+    <!-- Modal de Detalhes -->
     <div id="detail-modal" class="detail-modal">
       <div class="detail-header">
         <button class="btn-back" onclick="fecharDetalhes()"><i class="fa-solid fa-arrow-left"></i></button>
-        <img id="modal-img-main" src="" alt="Foto" onerror="tratarErroImagem(this)">
+        <img id="modal-img-main" src="" alt="Equipamento" onerror="tratarErroImagem(this)">
       </div>
       <div class="detail-body" id="modal-body-content"></div>
-    </div>
-
-    <!-- Modal de Formulário (Criar / Editar) -->
-    <div id="form-modal" class="detail-modal">
-      <div style="padding: 16px 20px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between;">
-        <h3 id="form-modal-title" style="color: var(--text-main);">Editar Registro</h3>
-        <button class="btn-back" style="position: static;" onclick="fecharFormulario()"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <div class="detail-body" id="form-body-content"></div>
     </div>
 
     <!-- Navegação Inferior -->
@@ -426,22 +388,21 @@
         <span>Usuário</span>
       </button>
       <button class="nav-item" onclick="switchTab(event, 'equipamentos', 'Equipamentos')">
-        <i class="fa-solid fa-cubes"></i>
+        <i class="fa-solid fa-database"></i>
         <span>Equipamentos</span>
       </button>
       <button class="nav-item" onclick="switchTab(event, 'ergonomia', 'Ergonomia')">
-        <i class="fa-solid fa-person-walking"></i>
+        <i class="fa-solid fa-border-all"></i>
         <span>Ergonomia</span>
       </button>
       <button class="nav-item" onclick="switchTab(event, 'limpeza', 'Rotinas de Limpeza')">
-        <i class="fa-solid fa-pump-soap"></i>
-        <span>Limpeza</span>
+        <i class="fa-solid fa-clipboard-check"></i>
+        <span>Rotinas de Limpeza</span>
       </button>
     </nav>
   </div>
 
 <script>
-  // Imagem neutra caso ocorra erro 403/404 em links externos
   const PLACEHOLDER_IMG = "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=400&auto=format&fit=crop&q=80";
 
   function tratarErroImagem(img) {
@@ -449,8 +410,8 @@
     img.src = PLACEHOLDER_IMG;
   }
 
-  // Dados padrão caso o localStorage esteja vazio
-  const dadosIniciais = {
+  // BANCO DE DADOS COMPLETO - OS 5 EQUIPAMENTOS ORIGINAIS
+  const dbApp = {
     usuario: {
       nome: "Tainara Freitas",
       email: "tainaracfreitas@gmail.com",
@@ -460,41 +421,89 @@
       {
         id: "eq-1",
         nome: "iVario (Rational)",
-        potencia: "(14 kW, trifásico)",
-        layout: "Requer ponto de água filtrada, ralo embutido ou grelha linear no piso. Exige coifa inercial devido ao vapor.",
+        potencia: "( 14 kW, trifásico)",
+        layout: "Requer ponto de água filtrada, ralo embutido ou grelha linear no piso. Exige coifa inercial devido ao vapor. Deve ficar na área central (ilha), facilitando a circulação.",
         foto: "https://www.rational-online.com/media/images/food/topshots-ivario/meat-ball-combi.jpg"
       },
       {
         id: "eq-2",
-        nome: "Forno Combinado iCombi Pro (Rational)",
+        nome: "Forno Combinado iCombi Pro 6-1/1 (Rational)",
         potencia: "~10,8 kW (Elétrico, trifásico)",
-        layout: "Necessita de ponto de água, esgoto de alta temperatura e exaustão. Mínimo de 10cm livres na lateral.",
+        layout: "Necessita de ponto de água, esgoto para alta temperatura e exaustão. Posicionamento a 1,5m da bancada de apoio, mínimo de 10cm na lateral esquerda para manutenção.",
         foto: "https://cdn.b4c.inf.br/storage/narcel/1000/forno-combinado-icombi-classic-6-11-rational17931090327248670.jpeg"
       },
       {
         id: "eq-3",
-        nome: "Chapa Elétrica Linha Gourmet 700",
+        nome: "Chapa Elétrica Linha Gourmet 700 (Alfatec)",
         potencia: "2,8 kW (220V Monofásico)",
-        layout: "Equipamento de bancada/parede. Exige coifa. Não deve ser posicionada junto a equipamentos de refrigeração.",
+        layout: "Equipamento de bancada/parede. Exige coifa. Não deve ser posicionado ao lado de equipamentos de refrigeração para evitar troca térmica no layout.",
         foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-chapa-eletrica-para-cozinha-industrial-linha-gourmet-700-400x750x280.png"
+      },
+      {
+        id: "eq-4",
+        nome: "Char Broiler À Gás Linha Stark 900 (Alfatec)",
+        potencia: "9.569 kcal/h (GLP) 1 queimador",
+        layout: "Obrigatório sistema de exaustão de alta vazão (fumaça radiante). Ponto de gás com válvula de corte rápido acessível.",
+        foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-char-broiler-a-gas-para-cozinha-industrial-linha-stark-900-450x980x240.png"
+      },
+      {
+        id: "eq-5",
+        nome: "Fogão a Gás com Forno Stark (Alfatec)",
+        potencia: "37.299 kcal/h (GLP) 4 bocas",
+        layout: "Exige coifa de exaustão de grande porte. Requer tubulação de GLP dedicada e piso com inclinação e ralo próximo para facilitar a higienização.",
+        foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-fogao-a-gas-com-forno-para-cozinha-industrial-linha-stark-900-1800x980x900.png"
       }
     ],
     ergonomia: [
       {
         id: "erg-1",
         equipamento: "iVario (Rational)",
-        descricao: "Ergonomia de Cuba & Basculamento",
-        ergonomiaInstalacao: "Borda alinhada à altura da cintura (~90cm). Sistema de basculamento elétrico que elimina o içamento de panelas.",
-        medidasAntifadiga: "Reduz esforço lombar em até 80%. Recomenda-se piso antiderrapante com grelha linear rebaixada.",
-        fotoEquipamento: "https://www.rational-online.com/media/images/food/topshots-ivario/meat-ball-combi.jpg"
+        descricao: "Ergonomia e Conforto",
+        fotoEquipamento: "https://www.rational-online.com/media/images/food/topshots-ivario/meat-ball-combi.jpg",
+        imgErgonomia: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTZt-E4kcWmUBT5eaj6tfUXnWNvUf4CbPX_Y6sgsPhewL6g5fI",
+        ergonomiaInstalacao: "Borda da cuba alinhada à altura da cintura (~90cm). Sistema de basculamento elétrico elimina o levantamento manual de panelas pesadas. Painel na altura dos olhos e ducha na altura das mãos.",
+        imgConforto: "https://img.magnific.com/vetores-gratis/colecao-de-culinaria-de-pessoas_52683-9462.jpg?semt=ais_hybrid&w=740&q=80",
+        medidasAntifadiga: "Evita rotação de tronco; basculamento reduz esforço lombar em 80%. Piso antiderrapante com grelha linear rebaixada na frente."
       },
       {
         id: "erg-2",
-        equipamento: "Forno Combinado iCombi Pro",
-        descricao: "Acesso de Carga e Altura Segura",
-        ergonomiaInstalacao: "Última prateleira não deve ultrapassar 1,60m de altura, evitando acidentes com líquidos quentes.",
-        medidasAntifadiga: "Raio livre para abertura e recuo do cozinheiro ao liberar vapor, evitando estresse térmico facial.",
-        fotoEquipamento: "https://cdn.b4c.inf.br/storage/narcel/1000/forno-combinado-icombi-classic-6-11-rational17931090327248670.jpeg"
+        equipamento: "Forno Combinado iCombi Pro 6-1/1 (Rational)",
+        descricao: "Ergonomia e Conforto",
+        fotoEquipamento: "https://cdn.b4c.inf.br/storage/narcel/1000/forno-combinado-icombi-classic-6-11-rational17931090327248670.jpeg",
+        imgErgonomia: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTZt-E4kcWmUBT5eaj6tfUXnWNvUf4CbPX_Y6sgsPhewL6g5fI",
+        ergonomiaInstalacao: "Uso de suporte/base para que a última prateleira não ultrapasse 1,60m de altura, permitindo visão e manuseio seguro de assadeiras pesadas na altura do peito.",
+        imgConforto: "https://img.magnific.com/vetores-gratis/colecao-de-culinaria-de-pessoas_52683-9462.jpg?semt=ais_hybrid&w=740&q=80",
+        medidasAntifadiga: "Raio de abertura da porta livre para recuo do cozinheiro durante escape de vapor; reduz estresse térmico facial."
+      },
+      {
+        id: "erg-3",
+        equipamento: "Chapa Elétrica Linha Gourmet 700 (Alfatec)",
+        descricao: "Ergonomia e Conforto",
+        fotoEquipamento: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-chapa-eletrica-para-cozinha-industrial-linha-gourmet-700-400x750x280.png",
+        imgErgonomia: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTZt-E4kcWmUBT5eaj6tfUXnWNvUf4CbPX_Y6sgsPhewL6g5fI",
+        ergonomiaInstalacao: "Superfície da chapa posicionada a 90cm - 95cm do piso. Concentrar itens de alto giro na faixa frontal (primeiros 40cm) para evitar hiperextensão de braços.",
+        imgConforto: "https://img.magnific.com/vetores-gratis/colecao-de-culinaria-de-pessoas_52683-9462.jpg?semt=ais_hybrid&w=740&q=80",
+        medidasAntifadiga: "Uso de tapete ergonômico emborrachado na frente da estação de chapeiro para diminuir fadiga de membros inferiores em pé."
+      },
+      {
+        id: "erg-4",
+        equipamento: "Char Broiler À Gás Linha Stark 900 (Alfatec)",
+        descricao: "Ergonomia e Conforto",
+        fotoEquipamento: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-char-broiler-a-gas-para-cozinha-industrial-linha-stark-900-450x980x240.png",
+        imgErgonomia: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTZt-E4kcWmUBT5eaj6tfUXnWNvUf4CbPX_Y6sgsPhewL6g5fI",
+        ergonomiaInstalacao: "Instalação sem prateleiras suspensas acima para evitar esticar braços sobre grelha quente. Uso obrigatório de pinças e espátulas de cabo longo (35-40cm).",
+        imgConforto: "https://img.magnific.com/vetores-gratis/colecao-de-culinaria-de-pessoas_52683-9462.jpg?semt=ais_hybrid&w=740&q=80",
+        medidasAntifadiga: "Insuflamento de ar fresco focado no operador para compensar o calor radiante massivo do carvão vulcânico/gás."
+      },
+      {
+        id: "erg-5",
+        equipamento: "Fogão a Gás com Forno Stark (Alfatec)",
+        descricao: "Ergonomia e Conforto",
+        fotoEquipamento: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-fogao-a-gas-com-forno-para-cozinha-industrial-linha-stark-900-1800x980x900.png",
+        imgErgonomia: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTZt-E4kcWmUBT5eaj6tfUXnWNvUf4CbPX_Y6sgsPhewL6g5fI",
+        ergonomiaInstalacao: "Grelhas de ferro perfeitamente niveladas para deslizar panelas pesadas sem içar. Espaço livre frontal de 1m para agachamento com flexão de joelhos ao usar o forno.",
+        imgConforto: "https://img.magnific.com/vetores-gratis/colecao-de-culinaria-de-pessoas_52683-9462.jpg?semt=ais_hybrid&w=740&q=80",
+        medidasAntifadiga: "Redução do esforço de elevação ao mover caldeirões entre bocas no mesmo plano horizontal."
       }
     ],
     limpeza: [
@@ -502,324 +511,5 @@
         id: "limp-1",
         equipamento: "iVario (Rational)",
         frequencia: "Diária (após o uso)",
-        produtos: "Detergente neutro e esponja não abrasiva.",
-        pop: "1. Escoar líquidos pelo ralo embutido.\n2. Esfregar a cuba com detergente.\n3. Enxaguar com a ducha retrátil e secar.",
-        foto: "https://www.rational-online.com/media/images/food/topshots-ivario/meat-ball-combi.jpg"
-      },
-      {
-        id: "limp-2",
-        equipamento: "Forno Combinado iCombi Pro",
-        frequencia: "Diária (via sistema)",
-        produtos: "Pastilhas Active Green / Care RATIONAL.",
-        pop: "1. Selecionar o nível de limpeza no painel digital.\n2. Adicionar as pastilhas indicadas.\n3. Aguardar o ciclo autolimpante (iCareSystem).",
-        foto: "https://cdn.b4c.inf.br/storage/narcel/1000/forno-combinado-icombi-classic-6-11-rational17931090327248670.jpeg"
-      }
-    ]
-  };
-
-  // Carregar dados salvos ou inicializar o banco
-  function obterDB() {
-    const salvo = localStorage.getItem("offuncional_db");
-    if (!salvo) {
-      localStorage.setItem("offuncional_db", JSON.stringify(dadosIniciais));
-      return dadosIniciais;
-    }
-    return JSON.parse(salvo);
-  }
-
-  function salvarDB(db) {
-    localStorage.setItem("offuncional_db", JSON.stringify(db));
-  }
-
-  let currentTab = 'usuario';
-
-  // Alternar abas com evento explicitamente repassado
-  function switchTab(evt, tabId, title) {
-    currentTab = tabId;
-    document.getElementById('page-title').innerText = title;
-
-    // Atualizar botões inferiores
-    document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
-    if (evt && evt.currentTarget) {
-      evt.currentTarget.classList.add('active');
-    }
-
-    // Alternar visibilidade das telas
-    document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
-    document.getElementById(`tab-${tabId}`).classList.add('active');
-
-    // Botão de Adicionar no topo
-    const btnAdd = document.getElementById('btn-header-action');
-    btnAdd.style.display = (tabId === 'usuario') ? 'none' : 'flex';
-
-    document.getElementById('global-search').value = '';
-    renderizarAbaAtual();
-  }
-
-  // Renderizadores específicos (renderizam apenas quando necessário)
-  function renderUsuario() {
-    const db = obterDB();
-    const u = db.usuario;
-    document.getElementById('lista-usuarios').innerHTML = `
-      <div class="item-card" style="flex-direction: row; align-items: center; padding: 14px; gap: 14px;">
-        <img src="${u.foto}" onerror="tratarErroImagem(this)" style="width: 54px; height: 54px; border-radius: 50%; object-fit: cover;">
-        <div>
-          <div class="item-card-title">${u.nome}</div>
-          <div class="item-card-subtitle">${u.email}</div>
-        </div>
-      </div>
-    `;
-  }
-
-  function renderEquipamentos(filtro = '') {
-    const db = obterDB();
-    const lista = db.equipamentos.filter(e => 
-      e.nome.toLowerCase().includes(filtro.toLowerCase()) || 
-      e.potencia.toLowerCase().includes(filtro.toLowerCase())
-    );
-
-    document.getElementById('lista-equipamentos').innerHTML = lista.map(item => `
-      <div class="item-card" onclick="abrirDetalheEquipamento('${item.id}')">
-        <img src="${item.foto}" onerror="tratarErroImagem(this)">
-        <div class="item-card-body">
-          <div class="item-card-title">${item.nome}</div>
-          <div class="item-card-subtitle">${item.potencia}</div>
-        </div>
-      </div>
-    `).join('');
-  }
-
-  function renderErgonomia(filtro = '') {
-    const db = obterDB();
-    const lista = db.ergonomia.filter(e => 
-      e.equipamento.toLowerCase().includes(filtro.toLowerCase()) || 
-      e.descricao.toLowerCase().includes(filtro.toLowerCase())
-    );
-
-    document.getElementById('lista-ergonomia').innerHTML = lista.map(item => `
-      <div class="item-card" onclick="abrirDetalheErgonomia('${item.id}')">
-        <img src="${item.fotoEquipamento}" onerror="tratarErroImagem(this)">
-        <div class="item-card-body">
-          <div class="item-card-title">${item.equipamento}</div>
-          <div class="item-card-subtitle">${item.descricao}</div>
-        </div>
-      </div>
-    `).join('');
-  }
-
-  function renderLimpeza(filtro = '') {
-    const db = obterDB();
-    const lista = db.limpeza.filter(l => 
-      l.equipamento.toLowerCase().includes(filtro.toLowerCase()) || 
-      l.frequencia.toLowerCase().includes(filtro.toLowerCase())
-    );
-
-    document.getElementById('lista-limpeza').innerHTML = lista.map(item => `
-      <div class="item-card" onclick="abrirDetalheLimpeza('${item.id}')">
-        <img src="${item.foto}" onerror="tratarErroImagem(this)">
-        <div class="item-card-body">
-          <div class="item-card-title">${item.equipamento}</div>
-          <div class="item-card-subtitle">${item.frequencia}</div>
-        </div>
-      </div>
-    `).join('');
-  }
-
-  function renderizarAbaAtual() {
-    if (currentTab === 'usuario') renderUsuario();
-    if (currentTab === 'equipamentos') renderEquipamentos();
-    if (currentTab === 'ergonomia') renderErgonomia();
-    if (currentTab === 'limpeza') renderLimpeza();
-  }
-
-  function filtrarItens() {
-    const termo = document.getElementById('global-search').value;
-    if (currentTab === 'equipamentos') renderEquipamentos(termo);
-    else if (currentTab === 'ergonomia') renderErgonomia(termo);
-    else if (currentTab === 'limpeza') renderLimpeza(termo);
-  }
-
-  // --- MODAIS DE DETALHE ---
-  function abrirDetalheEquipamento(id) {
-    const db = obterDB();
-    const item = db.equipamentos.find(e => e.id === id);
-    if (!item) return;
-
-    document.getElementById('modal-img-main').src = item.foto;
-    document.getElementById('modal-body-content').innerHTML = `
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h2 class="detail-title">${item.nome}</h2>
-        <button class="btn-action" onclick="editarEquipamento('${item.id}')"><i class="fa-solid fa-pen"></i> Editar</button>
-      </div>
-      <div class="detail-section">
-        <div class="detail-section-title">Potência</div>
-        <div class="detail-section-content">${item.potencia}</div>
-      </div>
-      <div class="detail-section">
-        <div class="detail-section-title">Exigências de Layout</div>
-        <div class="detail-section-content">${item.layout}</div>
-      </div>
-    `;
-    document.getElementById('detail-modal').classList.add('active');
-  }
-
-  function abrirDetalheErgonomia(id) {
-    const db = obterDB();
-    const item = db.ergonomia.find(e => e.id === id);
-    if (!item) return;
-
-    document.getElementById('modal-img-main').src = item.fotoEquipamento;
-    document.getElementById('modal-body-content').innerHTML = `
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h2 class="detail-title">${item.equipamento}</h2>
-      </div>
-      <p style="color:var(--text-muted); font-size: 0.9rem;">${item.descricao}</p>
-      <div class="detail-section">
-        <div class="detail-section-title">Ergonomia de Instalação</div>
-        <div class="detail-section-content">${item.ergonomiaInstalacao}</div>
-      </div>
-      <div class="detail-section">
-        <div class="detail-section-title">Medidas Antifadiga</div>
-        <div class="detail-section-content">${item.medidasAntifadiga}</div>
-      </div>
-    `;
-    document.getElementById('detail-modal').classList.add('active');
-  }
-
-  function abrirDetalheLimpeza(id) {
-    const db = obterDB();
-    const item = db.limpeza.find(l => l.id === id);
-    if (!item) return;
-
-    document.getElementById('modal-img-main').src = item.foto;
-    document.getElementById('modal-body-content').innerHTML = `
-      <h2 class="detail-title">${item.equipamento}</h2>
-      <div class="detail-section">
-        <div class="detail-section-title">Frequência</div>
-        <div class="detail-section-content">${item.frequencia}</div>
-      </div>
-      <div class="detail-section">
-        <div class="detail-section-title">Produtos Indicados</div>
-        <div class="detail-section-content">${item.produtos}</div>
-      </div>
-      <div class="detail-section">
-        <div class="detail-section-title">Procedimento Operacional Padrão (POP)</div>
-        <div class="detail-section-content">${item.pop}</div>
-      </div>
-    `;
-    document.getElementById('detail-modal').classList.add('active');
-  }
-
-  function fecharDetalhes() {
-    document.getElementById('detail-modal').classList.remove('active');
-  }
-
-  // --- MODAL DE EDIÇÃO / CRIAÇÃO ---
-  function editarEquipamento(id) {
-    fecharDetalhes();
-    const db = obterDB();
-    const item = db.equipamentos.find(e => e.id === id);
-    if (!item) return;
-
-    document.getElementById('form-modal-title').innerText = "Editar Equipamento";
-    document.getElementById('form-body-content').innerHTML = `
-      <div class="form-group">
-        <label>Nome do Equipamento</label>
-        <input type="text" id="edit-nome" value="${item.nome}">
-      </div>
-      <div class="form-group">
-        <label>Potência / Consumo</label>
-        <input type="text" id="edit-potencia" value="${item.potencia}">
-      </div>
-      <div class="form-group">
-        <label>URL da Imagem</label>
-        <input type="text" id="edit-foto" value="${item.foto}">
-      </div>
-      <div class="form-group">
-        <label>Exigências de Layout</label>
-        <textarea id="edit-layout">${item.layout}</textarea>
-      </div>
-      <button class="btn-action" style="justify-content:center; margin-top:12px;" onclick="salvarEdicaoEquipamento('${item.id}')">
-        <i class="fa-solid fa-check"></i> Salvar Alterações
-      </button>
-    `;
-    document.getElementById('form-modal').classList.add('active');
-  }
-
-  function salvarEdicaoEquipamento(id) {
-    const db = obterDB();
-    const item = db.equipamentos.find(e => e.id === id);
-    if (!item) return;
-
-    item.nome = document.getElementById('edit-nome').value.trim();
-    item.potencia = document.getElementById('edit-potencia').value.trim();
-    item.foto = document.getElementById('edit-foto').value.trim() || PLACEHOLDER_IMG;
-    item.layout = document.getElementById('edit-layout').value.trim();
-
-    salvarDB(db);
-    fecharFormulario();
-    renderEquipamentos();
-  }
-
-  function abrirModalCriacao() {
-    if (currentTab === 'equipamentos') {
-      document.getElementById('form-modal-title').innerText = "Novo Equipamento";
-      document.getElementById('form-body-content').innerHTML = `
-        <div class="form-group">
-          <label>Nome do Equipamento</label>
-          <input type="text" id="novo-nome" placeholder="Ex: Forno Convector">
-        </div>
-        <div class="form-group">
-          <label>Potência</label>
-          <input type="text" id="novo-potencia" placeholder="Ex: 5 kW / 220V">
-        </div>
-        <div class="form-group">
-          <label>URL da Imagem</label>
-          <input type="text" id="novo-foto" placeholder="https://...">
-        </div>
-        <div class="form-group">
-          <label>Exigências de Layout</label>
-          <textarea id="novo-layout" placeholder="Pontos de gás, exaustão, tomadas..."></textarea>
-        </div>
-        <button class="btn-action" style="justify-content:center; margin-top:12px;" onclick="salvarNovoEquipamento()">
-          <i class="fa-solid fa-plus"></i> Cadastrar Equipamento
-        </button>
-      `;
-      document.getElementById('form-modal').classList.add('active');
-    } else {
-      alert("Para cadastrar novos itens nesta aba, você pode expandir a mesma lógica do formulário!");
-    }
-  }
-
-  function salvarNovoEquipamento() {
-    const nome = document.getElementById('novo-nome').value.trim();
-    if (!nome) {
-      alert("Por favor, preencha pelo menos o nome do equipamento.");
-      return;
-    }
-
-    const db = obterDB();
-    db.equipamentos.push({
-      id: "eq-" + Date.now(),
-      nome: nome,
-      potencia: document.getElementById('novo-potencia').value.trim() || "Não informada",
-      foto: document.getElementById('novo-foto').value.trim() || PLACEHOLDER_IMG,
-      layout: document.getElementById('novo-layout').value.trim() || "Sem exigências cadastradas."
-    });
-
-    salvarDB(db);
-    fecharFormulario();
-    renderEquipamentos();
-  }
-
-  function fecharFormulario() {
-    document.getElementById('form-modal').classList.remove('active');
-  }
-
-  // Inicialização
-  window.onload = function() {
-    renderizarAbaAtual();
-  };
-</script>
-</body>
-</html>
+        produtos: "Detergente neutro, esponja não abrasiva.",
+        pop: "1. Escoar líquidos pelo ralo embutido.\n2. Esfregar a cuba com detergente.\n3. Enxaguar usando a ducha retrá
