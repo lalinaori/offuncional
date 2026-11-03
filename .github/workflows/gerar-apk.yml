@@ -1,0 +1,122 @@
+name: Gerar APK Offline
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Baixar código do repositório
+        uses: actions/checkout@v4
+
+      - name: 2. Configurar Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: 3. Configurar Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+
+      - name: 4. Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 5. Preparar Android SDK
+        run: |
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "platforms;android-34" "build-tools;34.0.0"
+
+      - name: 6. Embutir fotos e ícones para funcionar 100% Offline
+        run: |
+          npm install -g cordova
+          cordova create app br.com.offuncional.app "OFFuncional"
+          cp index.html app/www/index.html
+          
+          # Baixar ícones do FontAwesome para dentro do APK
+          npm install @fortawesome/fontawesome-free@6.4.0
+          cp -r node_modules/@fortawesome/fontawesome-free app/www/fontawesome
+
+          # Script automático que baixa todas as fotos e salva dentro do APK
+          python3 - << 'EOF'
+          import os, re, urllib.request
+
+          html_path = "app/www/index.html"
+          img_dir = "app/www/img"
+          os.makedirs(img_dir, exist_ok=True)
+
+          with open(html_path, "r", encoding="utf-8") as f:
+              html = f.read()
+
+          # Trocar FontAwesome online pelo que está salvo dentro do APK
+          html = html.replace(
+              "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css",
+              "fontawesome/css/all.min.css"
+          )
+
+          # Encontrar todas as fotos no código e baixar para a pasta interna do APK
+          urls = sorted(list(set(re.findall(r'https://[^\s"<>]+', html))))
+          headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
+
+          for i, url in enumerate(urls):
+              if "fontawesome" in url or "sw.js" in url:
+                  continue
+              ext = ".png" if ".png" in url.lower() else ".jpg"
+              local_filename = f"foto_{i}{ext}"
+              local_path = os.path.join(img_dir, local_filename)
+              try:
+                  req = urllib.request.Request(url, headers=headers)
+                  with urllib.request.urlopen(req, timeout=20) as resp, open(local_path, "wb") as out:
+                      out.write(resp.read())
+                  html = html.replace(url, f"img/{local_filename}")
+                  print(f"Foto salva no APK: {url} -> img/{local_filename}")
+              except Exception as e:
+                  print(f"Aviso ao baixar {url}: {e}")
+
+          with open(html_path, "w", encoding="utf-8") as f:
+              f.write(html)
+
+          # Baixar o ícone do ovinho fofo para ser o ícone do aplicativo
+          try:
+              req = urllib.request.Request("https://cdn-icons-png.flaticon.com/512/1046/1046774.png", headers=headers)
+              with urllib.request.urlopen(req, timeout=20) as resp, open("app/icon.png", "wb") as out:
+                  out.write(resp.read())
+          except Exception as e:
+              print("Erro ao baixar icone:", e)
+
+          # Configurar tela vertical, cor laranja e ícone
+          config_path = "app/config.xml"
+          with open(config_path, "r", encoding="utf-8") as f:
+              cfg = f.read()
+
+          extras = '''
+              <preference name="Orientation" value="portrait" />
+              <preference name="StatusBarBackgroundColor" value="#d94e28" />
+              <preference name="AndroidWindowSplashScreenBackground" value="#d94e28" />
+          '''
+          if os.path.exists("app/icon.png"):
+              extras += '\n    <icon src="icon.png" />\n'
+
+          cfg = cfg.replace("</widget>", extras + "\n</widget>")
+          with open(config_path, "w", encoding="utf-8") as f:
+              f.write(cfg)
+          EOF
+
+      - name: 7. Compilar o APK Nativo Offline
+        run: |
+          cd app
+          cordova platform add android@13.0.0
+          cordova build android
+
+      - name: 8. Entregar o APK pronto para download
+        uses: actions/upload-artifact@v4
+        with:
+          name: OFFuncional-APK-100-Porcento-Offline
+          path: app/platforms/android/app/build/outputs/apk/debug/app-debug.apk
