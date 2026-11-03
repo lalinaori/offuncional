@@ -362,18 +362,32 @@
       color: var(--primary-color);
       font-weight: 700;
     }
-    /* Ajuste automático para ficar perfeito na tela real do celular */
-    @media (max-width: 480px) {
+
+    /* Ajuste automático para ocupar 100% da tela real do celular sem faixa preta */
+    @media (max-width: 600px) {
+      body {
+        background-color: var(--primary-color);
+        align-items: flex-start;
+        min-height: 100dvh;
+      }
       .app-container {
         max-width: 100%;
+        width: 100%;
         height: 100dvh;
         max-height: none;
         border-radius: 0;
+        box-shadow: none;
       }
       .bottom-nav {
         position: fixed;
         bottom: 0;
         left: 0;
+      }
+      .detail-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100dvh;
       }
     }
   </style>
@@ -417,8 +431,8 @@
           </div>
         </div>
 
-        <h3 style="margin-bottom: 12px; color: var(--text-main); font-size: 1.05rem;">Responsável Técnico</h3>
-        <div id="lista-usuarios"></div>
+        <h3 style="margin-bottom: 12px; color: var(--text-main); font-size: 1.05rem;">Equipe do Projeto</h3>
+        <div id="lista-usuarios" style="display: flex; flex-direction: column; gap: 10px;"></div>
       </section>
 
       <!-- Aba 2: Equipamentos -->
@@ -488,11 +502,20 @@
   }
 
   const dbApp = {
-    usuario: {
-      nome: "Tainara Freitas",
-      email: "tainaracfreitas@gmail.com",
-      foto: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80"
-    },
+    usuarios: [
+      {
+        nome: "Tainara Freitas",
+        email: "tainaracfreitas@gmail.com",
+        cargo: "Idealização, Pesquisa & Projeto Original",
+        foto: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80"
+      },
+      {
+        nome: "Lina Orí", // <--- COLOQUE SEU NOME AQUI
+        email: "lalinaori@gmail.com", // <--- COLOQUE SEU E-MAIL AQUI (ou deixe assim)
+        cargo: "Adaptação para App, Suporte & Revisão",
+        foto: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&auto=format&fit=crop&q=80"
+      }
+    ],
     equipamentos: [
       {
         id: "eq-1",
@@ -648,13 +671,11 @@
 
   let currentTab = 'usuario';
 
-  // Função com reset automático do scroll para o topo
   window.switchTab = function(tabId, title) {
     currentTab = tabId;
     var pageTitle = document.getElementById('page-title');
     if (pageTitle) pageTitle.innerText = title;
 
-    // Volta o scroll imediatamente para o topo da tela
     var contentArea = document.getElementById('app-main-content');
     if (contentArea) contentArea.scrollTop = 0;
 
@@ -685,17 +706,18 @@
   function renderUsuario() {
     var container = document.getElementById('lista-usuarios');
     if (!container) return;
-    var u = dbApp.usuario;
-    container.innerHTML = `
-      <div class="item-card" style="flex-direction: row; align-items: center; padding: 12px; gap: 12px;">
-        <img src="${u.foto}" onerror="tratarErroImagem(this)" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover;">
-        <div>
-          <div class="item-card-title">${u.nome}</div>
-          <div class="item-card-subtitle">${u.email}</div>
-          <div style="font-size: 0.72rem; color: var(--primary-color); font-weight: 600; margin-top: 2px;">Gestão de Operação e Layout</div>
+    container.innerHTML = dbApp.usuarios.map(function(u) {
+      return `
+        <div class="item-card" style="flex-direction: row; align-items: center; padding: 12px; gap: 12px;">
+          <img src="${u.foto}" onerror="tratarErroImagem(this)" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover;">
+          <div>
+            <div class="item-card-title">${u.nome}</div>
+            <div class="item-card-subtitle">${u.email}</div>
+            <div style="font-size: 0.72rem; color: var(--primary-color); font-weight: 600; margin-top: 2px;">${u.cargo}</div>
+          </div>
         </div>
-      </div>
-    `;
+      `;
+    }).join('');
   }
 
   function renderEquipamentos(filtro) {
