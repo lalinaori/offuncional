@@ -362,6 +362,20 @@
       color: var(--primary-color);
       font-weight: 700;
     }
+    /* Ajuste automático para ficar perfeito na tela real do celular */
+    @media (max-width: 480px) {
+      .app-container {
+        max-width: 100%;
+        height: 100dvh;
+        max-height: none;
+        border-radius: 0;
+      }
+      .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+      }
+    }
   </style>
 </head>
 <body>
