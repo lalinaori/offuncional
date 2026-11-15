@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OFFuncional - Gestão & Ergonomia</title>
-  
-  <!-- Configurações PWA -->
+
+  <!-- Configurações PWA & Offline -->
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1046/1046774.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -46,6 +46,7 @@
       min-height: 100vh;
     }
 
+    /* Container Simulador de Smartphone */
     .app-container {
       width: 100%;
       max-width: 420px;
@@ -60,6 +61,7 @@
       border-radius: 24px;
     }
 
+    /* Cabeçalho */
     .app-header {
       background-color: var(--primary-color);
       color: #ffffff;
@@ -110,6 +112,7 @@
       color: rgba(255, 255, 255, 0.75);
     }
 
+    /* Área Principal de Conteúdo */
     .app-content {
       flex: 1;
       overflow-y: auto;
@@ -126,6 +129,7 @@
       display: block;
     }
 
+    /* Componentes de Cards */
     .banner-card {
       background: linear-gradient(135deg, #2c3e50, #4a6572);
       color: white;
@@ -156,11 +160,47 @@
       background-color: #fef3c7;
       color: #92400e;
       font-weight: 700;
-      padding: 2px 7px;
+      padding: 2px 8px;
       border-radius: 6px;
       margin-bottom: 4px;
       text-transform: uppercase;
       width: fit-content;
+    }
+
+    .user-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .user-card {
+      background-color: var(--card-bg);
+      border-radius: 14px;
+      padding: 12px 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .user-card:active {
+      transform: scale(0.98);
+    }
+
+    .user-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 2px solid #fbe9e3;
+    }
+
+    .user-info {
+      overflow: hidden;
     }
 
     .grid-cards {
@@ -208,23 +248,24 @@
     .item-card-subtitle {
       font-size: 0.8rem;
       color: var(--text-muted);
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
       overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
+    /* Modal de Detalhes */
     .detail-modal {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: var(--card-bg);
+      background-color: var(--bg-color);
       z-index: 100;
       display: none;
       flex-direction: column;
       overflow-y: auto;
+      padding-bottom: calc(var(--nav-height) + 16px);
     }
 
     .detail-modal.active {
@@ -235,13 +276,14 @@
       position: relative;
       width: 100%;
       height: 220px;
+      background-color: #ffffff;
+      flex-shrink: 0;
     }
 
     .detail-header img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      background-color: #eee;
+      object-fit: contain;
     }
 
     .btn-back {
@@ -269,37 +311,16 @@
     }
 
     .detail-title {
-      font-size: 1.3rem;
+      font-size: 1.35rem;
       font-weight: 700;
       color: var(--text-main);
-    }
-
-    .detail-section {
-      border-top: 1px solid var(--border-color);
-      padding-top: 12px;
-    }
-
-    .detail-section-title {
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-      font-weight: 600;
-    }
-
-    .detail-section-content {
-      font-size: 0.95rem;
-      color: var(--text-main);
-      line-height: 1.4;
-      white-space: pre-line;
     }
 
     .detail-img-box {
       width: 100%;
       border-radius: 12px;
       overflow: hidden;
-      margin-top: 8px;
+      margin-top: 4px;
     }
 
     .detail-img-box img {
@@ -307,7 +328,63 @@
       display: block;
     }
 
-    /* Menu de Navegação Inferior (5 Abas) */
+    /* Cartões em Caixas Agrupadas (Usados em todas as abas de detalhes) */
+    .func-group-card {
+      background-color: #ffffff;
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .func-group-title {
+      text-align: center;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 2px;
+    }
+
+    .func-field-label {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .func-field-value {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+      white-space: pre-line;
+    }
+
+    .func-highlight-box {
+      background-color: #fbe9e3;
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .func-highlight-box i {
+      font-size: 1.25rem;
+      color: var(--text-main);
+      margin-top: 2px;
+    }
+
+    .func-highlight-box p {
+      font-size: 0.92rem;
+      color: var(--text-main);
+      line-height: 1.4;
+      font-weight: 500;
+    }
+
+    /* Menu de Navegação Inferior (Bottom Bar - 5 Abas) */
     .bottom-nav {
       position: absolute;
       bottom: 0;
@@ -319,8 +396,7 @@
       display: flex;
       justify-content: space-around;
       align-items: center;
-      z-index: 10;
-      padding: 0 4px;
+      z-index: 110;
     }
 
     .nav-item {
@@ -336,14 +412,20 @@
       border: none;
       background: none;
       width: 20%;
-      text-align: center;
-      white-space: nowrap;
+      padding: 0 2px;
       overflow: hidden;
       text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .nav-item i {
-      font-size: 1.15rem;
+      font-size: 1.2rem;
+    }
+
+    .nav-item span {
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .nav-item.active {
@@ -383,6 +465,7 @@
 <body>
 
   <div class="app-container">
+    <!-- Cabeçalho Dinâmico -->
     <header class="app-header">
       <div class="header-top">
         <h1 class="header-title" id="page-title">Usuário</h1>
@@ -393,41 +476,42 @@
       </div>
     </header>
 
+    <!-- Área Principal das Abas -->
     <main class="app-content" id="app-main-content">
-      <!-- Aba 1: Usuário (Com os 5 integrantes da planilha) -->
+      <!-- Aba 1: Usuário -->
       <section id="tab-usuario" class="tab-pane active">
         <div class="banner-card">
           <h2>Bem Vindo ao OFFuncional</h2>
-          <button class="btn-action" onclick="window.switchTab('equipamentos', 'Equipamento')">
+          <button class="btn-action" onclick="window.switchTab('equipamentos', 'Equipamentos')">
             <i class="fa-solid fa-rocket"></i> Vamos lá!
           </button>
         </div>
-        <h3 style="margin-bottom: 12px; color: var(--text-main);">Usuários</h3>
-        <div id="lista-usuarios" style="display: flex; flex-direction: column; gap: 10px;"></div>
+        <h3 style="margin-bottom: 12px; color: var(--text-main);">Usuários (5)</h3>
+        <div class="user-list" id="lista-usuarios"></div>
       </section>
 
-      <!-- Aba 2: Equipamento -->
+      <!-- Aba 2: Equipamentos -->
       <section id="tab-equipamentos" class="tab-pane">
         <div class="grid-cards" id="lista-equipamentos"></div>
       </section>
 
-      <!-- Aba 3: Funcionalidades (Nova aba da planilha) -->
+      <!-- Aba 3: Funcionalidades -->
       <section id="tab-funcionalidades" class="tab-pane">
         <div class="grid-cards" id="lista-funcionalidades"></div>
       </section>
 
-      <!-- Aba 4: Ergonomia e Conforto -->
+      <!-- Aba 4: Ergonomia -->
       <section id="tab-ergonomia" class="tab-pane">
         <div class="grid-cards" id="lista-ergonomia"></div>
       </section>
 
-      <!-- Aba 5: Rotina de Limpeza -->
+      <!-- Aba 5: Rotinas de Limpeza -->
       <section id="tab-limpeza" class="tab-pane">
         <div class="grid-cards" id="lista-limpeza"></div>
       </section>
     </main>
 
-    <!-- Modal de Detalhes -->
+    <!-- Modal para Detalhes Expandidos -->
     <div id="detail-modal" class="detail-modal">
       <div class="detail-header">
         <button class="btn-back" onclick="fecharDetalhes()"><i class="fa-solid fa-arrow-left"></i></button>
@@ -436,616 +520,706 @@
       <div class="detail-body" id="modal-body-content"></div>
     </div>
 
-    <!-- Navegação Inferior com as 5 Abas da Planilha -->
+    <!-- Navegação de Abas Inferior -->
     <nav class="bottom-nav">
       <button class="nav-item active" id="btn-nav-usuario" onclick="window.switchTab('usuario', 'Usuário')">
-        <i class="fa-solid fa-user"></i>
+        <i class="fa-regular fa-user"></i>
         <span>Usuário</span>
       </button>
-      <button class="nav-item" id="btn-nav-equipamentos" onclick="window.switchTab('equipamentos', 'Equipamento')">
-        <i class="fa-solid fa-database"></i>
-        <span>Equipamento</span>
+      <button class="nav-item" id="btn-nav-equipamentos" onclick="window.switchTab('equipamentos', 'Equipamentos')">
+        <i class="fa-solid fa-globe"></i>
+        <span>Equipamentos</span>
       </button>
       <button class="nav-item" id="btn-nav-funcionalidades" onclick="window.switchTab('funcionalidades', 'Funcionalidades')">
-        <i class="fa-solid fa-fire-burner"></i>
-        <span>Funcionalid...</span>
+        <i class="fa-solid fa-certificate"></i>
+        <span>Funcionalida...</span>
       </button>
-      <button class="nav-item" id="btn-nav-ergonomia" onclick="window.switchTab('ergonomia', 'Ergonomia e Conforto')">
+      <button class="nav-item" id="btn-nav-ergonomia" onclick="window.switchTab('ergonomia', 'Ergonomia')">
         <i class="fa-solid fa-border-all"></i>
         <span>Ergonomia</span>
       </button>
-      <button class="nav-item" id="btn-nav-limpeza" onclick="window.switchTab('limpeza', 'Rotina de Limpeza')">
-        <i class="fa-solid fa-clipboard-check"></i>
-        <span>Limpeza</span>
+      <button class="nav-item" id="btn-nav-limpeza" onclick="window.switchTab('limpeza', 'Rotinas de Limpeza')">
+        <i class="fa-regular fa-file-lines"></i>
+        <span>Rotinas_de_L...</span>
       </button>
     </nav>
   </div>
 
-<script>
-  const PLACEHOLDER_IMG = "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=400&auto=format&fit=crop&q=80";
+  <script>
+    const PLACEHOLDER_IMG = "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=400&auto=format&fit=crop&q=80";
 
-  function tratarErroImagem(img) {
-    img.onerror = null;
-    img.src = PLACEHOLDER_IMG;
-  }
-
-  // BANCO DE DADOS COMPLETO COM AS 5 ABAS DA PLANILHA
-  const dbApp = {
-    usuarios: [
-      {
-        nome: "Tainara Freitas",
-        email: "tainaracfreitas@gmail.com",
-        foto: "https://ui-avatars.com/api/?name=Tainara&background=d94e28&color=fff&size=128&bold=true&format=png"
-      },
-      {
-        nome: "Lucas Rodrigues",
-        email: "lucas.silveira.thor@gmail.com",
-        foto: "https://ui-avatars.com/api/?name=Lucas+Rodrigues&background=2c3e50&color=fff&size=128&bold=true&format=png"
-      },
-      {
-        nome: "Lina Orí",
-        email: "lrv.silva2010@gmail.com",
-        foto: "https://ui-avatars.com/api/?name=Lina&background=d94e28&color=fff&size=128&bold=true&format=png"
-      },
-      {
-        nome: "Caroline Amorim",
-        email: "ribeiroamorimcaroline@gmail.com",
-        foto: "https://ui-avatars.com/api/?name=Caroline&background=2c3e50&color=fff&size=128&bold=true&format=png"
-      },
-      {
-        nome: "Lucas Buarque",
-        email: "lucarbuarque2007@gmail.com",
-        foto: "https://ui-avatars.com/api/?name=Lucas+Buarque&background=d94e28&color=fff&size=128&bold=true&format=png"
-      }
-    ],
-    equipamentos: [
-      {
-        id: "eq-1",
-        nome: "iVario (Rational)",
-        potencia: "( 14 kW, trifásico)",
-        layout: "Requer ponto de água filtrada, ralo embutido ou grelha linear no piso. Exige coifa inercial devido ao vapor. Deve ficar na área central (ilha), facilitando a circulação.",
-        foto: "https://www.rational-online.com/media/images/food/topshots-ivario/meat-ball-combi.jpg"
-      },
-      {
-        id: "eq-2",
-        nome: "Forno Combinado iCombi Pro 6-1/1 (Rational)",
-        potencia: "~10,8 kW (Elétrico, trifásico)",
-        layout: "Necessita de ponto de água, esgoto para alta temperatura e exaustão. Posicionamento a 1,5m da bancada de apoio, mínimo de 10cm na lateral esquerda para manutenção.",
-        foto: "https://cdn.b4c.inf.br/storage/narcel/1000/forno-combinado-icombi-classic-6-11-rational17931090327248670.jpeg"
-      },
-      {
-        id: "eq-3",
-        nome: "Chapa Elétrica Linha Gourmet 700 (Alfatec)",
-        potencia: "2,8 kW (220V Monofásico)",
-        layout: "Equipamento de bancada/parede. Exige coifa. Não deve ser posicionado ao lado de equipamentos de refrigeração para evitar troca térmica no layout.",
-        foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-chapa-eletrica-para-cozinha-industrial-linha-gourmet-700-400x750x280.png"
-      },
-      {
-        id: "eq-4",
-        nome: "Char Broiler À Gás Linha Stark 900 (Alfatec)",
-        potencia: "9.569 kcal/h (GLP) 1 queimador",
-        layout: "Obrigatório sistema de exaustão de alta vazão (fumaça radiante). Ponto de gás com válvula de corte rápido acessível.",
-        foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-char-broiler-a-gas-para-cozinha-industrial-linha-stark-900-450x980x240.png"
-      },
-      {
-        id: "eq-5",
-        nome: "Fogão a Gás com Forno Stark (Alfatec)",
-        potencia: "37.299 kcal/h (GLP) 4 bocas",
-        layout: "Exige coifa de exaustão de grande porte. Requer tubulação de GLP dedicada e piso com inclinação e ralo próximo para facilitar a higienização.",
-        foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-fogao-a-gas-com-forno-para-cozinha-industrial-linha-stark-900-1800x980x900.png"
-      }
-    ],
-    funcionalidades: [
-      {
-        id: "func-1",
-        equipamento: "iVario (Rational)",
-        possibilidadesUso: "Risotos, massas, carnes ensopadas, legumes, molhos e frituras.",
-        tipoCalor: "Aquecimento da cuba por sistema elétrico, com transferência de calor por contato e controle preciso de temperatura.",
-        tecnicasCoccao: "Fervura, fritura, braseamento, refogado e cozimento lento.",
-        usoMaisComum: "Cozinhas profissionais de grande produção, restaurantes, hotéis e cozinhas institucionais.",
-        maisRecomendado: "Preparações em grandes volumes e receitas que exigem controle preciso de temperatura.",
-        diferencial: "Reúne diferentes possibilidades de cocção em um único equipamento.",
-        foto: "https://www.rational-online.com/media/images/food/topshots-ivario/meat-ball-combi.jpg"
-      },
-      {
-        id: "func-2",
-        equipamento: "Forno Combinado iCombi Pro 6-1/1 (Rational)",
-        possibilidadesUso: "Carnes assadas, frangos, peixes, legumes, pães, bolos e alimentos cozidos no vapor.",
-        tipoCalor: "Ar quente circulante, vapor ou combinação dos dois.",
-        tecnicasCoccao: "Assamento, cocção a vapor, gratinação, grelhamento e regeneração.",
-        usoMaisComum: "Restaurantes, hotéis e cozinhas industriais.",
-        maisRecomendado: "Cozinhas que precisam preparar diferentes alimentos com padronização e controle de temperatura e umidade.",
-        diferencial: "Combina calor seco e vapor em um único equipamento.",
-        foto: "https://cdn.b4c.inf.br/storage/narcel/1000/forno-combinado-icombi-classic-6-11-rational17931090327248670.jpeg"
-      },
-      {
-        id: "func-3",
-        equipamento: "Chapa Elétrica Linha Gourmet 700 (Alfatec)",
-        possibilidadesUso: "Hambúrgueres, carnes, ovos, panquecas, sanduíches e legumes.",
-        tipoCalor: "Condução, pelo contato do alimento com a superfície metálica aquecida.",
-        tecnicasCoccao: "Grelhar, selar, dourar e saltear.",
-        usoMaisComum: "Lanchonetes, hamburguerias e restaurantes.",
-        maisRecomendado: "Preparações rápidas feitas em contato direto com uma superfície quente.",
-        diferencial: "Superfície ampla que permite preparar vários alimentos simultaneamente.",
-        foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-chapa-eletrica-para-cozinha-industrial-linha-gourmet-700-400x750x280.png"
-      },
-      {
-        id: "func-4",
-        equipamento: "Char Broiler a Gás Linha Stark 900 (Alfatec)",
-        possibilidadesUso: "Carnes, hambúrgueres, frangos, peixes e legumes grelhados.",
-        tipoCalor: "Chama a gás e grelhas aquecidas, com transferência por radiação e condução.",
-        tecnicasCoccao: "Grelhar, selar e dourar.",
-        usoMaisComum: "Churrascarias, steakhouses e restaurantes especializados em carnes.",
-        maisRecomendado: "Preparações que precisam de marcas de grelha e acabamento característico de alimentos grelhados.",
-        diferencial: "Proporciona marcas de grelha e sabor característico do preparo sobre grelhas aquecidas.",
-        foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-char-broiler-a-gas-para-cozinha-industrial-linha-stark-900-450x980x240.png"
-      },
-      {
-        id: "func-5",
-        equipamento: "Fogão a Gás com Forno Stark (Alfatec)",
-        possibilidadesUso: "Molhos, sopas, arroz, massas, carnes, refogados e preparações assadas.",
-        tipoCalor: "Nas bocas, aquecimento por chama; no forno, principalmente convecção e radiação.",
-        tecnicasCoccao: "Fervura, refogado, fritura, cozimento e assamento.",
-        usoMaisComum: "Restaurantes, cozinhas industriais, hotéis e cozinhas profissionais.",
-        maisRecomendado: "Cozinhas que precisam realizar diferentes preparações simultaneamente, utilizando as bocas e o forno.",
-        diferencial: "Combina fogão e forno em um único equipamento.",
-        foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-fogao-a-gas-com-forno-para-cozinha-industrial-linha-stark-900-1800x980x900.png"
-      }
-    ],
-    ergonomia: [
-      {
-        id: "erg-1",
-        equipamento: "iVario (Rational)",
-        norma: "NR-17 (Ergonomia)",
-        descricao: "Ergonomia e Conforto",
-        fotoEquipamento: "https://www.rational-online.com/media/images/food/topshots-ivario/meat-ball-combi.jpg",
-        imgErgonomia: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTZt-E4kcWmUBT5eaj6tfUXnWNvUf4CbPX_Y6sgsPhewL6g5fI",
-        ergonomiaInstalacao: "Borda da cuba alinhada à altura da cintura (~90cm). Sistema de basculamento elétrico elimina o levantamento manual de panelas pesadas. Painel na altura dos olhos e ducha na altura das mãos.",
-        imgConforto: "https://img.magnific.com/vetores-gratis/colecao-de-culinaria-de-pessoas_52683-9462.jpg?semt=ais_hybrid&w=740&q=80",
-        medidasAntifadiga: "Evita rotação de tronco; basculamento reduz esforço lombar em 80%. Piso antiderrapante com grelha linear rebaixada na frente."
-      },
-      {
-        id: "erg-2",
-        equipamento: "Forno Combinado iCombi Pro 6-1/1 (Rational)",
-        norma: "NR-17 (Ergonomia)",
-        descricao: "Ergonomia e Conforto",
-        fotoEquipamento: "https://cdn.b4c.inf.br/storage/narcel/1000/forno-combinado-icombi-classic-6-11-rational17931090327248670.jpeg",
-        imgErgonomia: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTZt-E4kcWmUBT5eaj6tfUXnWNvUf4CbPX_Y6sgsPhewL6g5fI",
-        ergonomiaInstalacao: "Uso de suporte/base para que a última prateleira não ultrapasse 1,60m de altura, permitindo visão e manuseio seguro de assadeiras pesadas na altura do peito.",
-        imgConforto: "https://img.magnific.com/vetores-gratis/colecao-de-culinaria-de-pessoas_52683-9462.jpg?semt=ais_hybrid&w=740&q=80",
-        medidasAntifadiga: "Raio de abertura da porta livre para recuo do cozinheiro durante escape de vapor; reduz estresse térmico facial."
-      },
-      {
-        id: "erg-3",
-        equipamento: "Chapa Elétrica Linha Gourmet 700 (Alfatec)",
-        norma: "NR-17 (Ergonomia)",
-        descricao: "Ergonomia e Conforto",
-        fotoEquipamento: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-chapa-eletrica-para-cozinha-industrial-linha-gourmet-700-400x750x280.png",
-        imgErgonomia: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTZt-E4kcWmUBT5eaj6tfUXnWNvUf4CbPX_Y6sgsPhewL6g5fI",
-        ergonomiaInstalacao: "Superfície da chapa posicionada a 90cm - 95cm do piso. Concentrar itens de alto giro na faixa frontal (primeiros 40cm) para evitar hiperextensão de braços.",
-        imgConforto: "https://img.magnific.com/vetores-gratis/colecao-de-culinaria-de-pessoas_52683-9462.jpg?semt=ais_hybrid&w=740&q=80",
-        medidasAntifadiga: "Uso de tapete ergonômico emborrachado na frente da estação de chapeiro para diminuir fadiga de membros inferiores em pé."
-      },
-      {
-        id: "erg-4",
-        equipamento: "Char Broiler À Gás Linha Stark 900 (Alfatec)",
-        norma: "NR-17 (Ergonomia)",
-        descricao: "Ergonomia e Conforto",
-        fotoEquipamento: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-char-broiler-a-gas-para-cozinha-industrial-linha-stark-900-450x980x240.png",
-        imgErgonomia: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTZt-E4kcWmUBT5eaj6tfUXnWNvUf4CbPX_Y6sgsPhewL6g5fI",
-        ergonomiaInstalacao: "Instalação sem prateleiras suspensas acima para evitar esticar braços sobre grelha quente. Uso obrigatório de pinças e espátulas de cabo longo (35-40cm).",
-        imgConforto: "https://img.magnific.com/vetores-gratis/colecao-de-culinaria-de-pessoas_52683-9462.jpg?semt=ais_hybrid&w=740&q=80",
-        medidasAntifadiga: "Insuflamento de ar fresco focado no operador para compensar o calor radiante massivo do carvão vulcânico/gás."
-      },
-      {
-        id: "erg-5",
-        equipamento: "Fogão a Gás com Forno Stark (Alfatec)",
-        norma: "NR-17 (Ergonomia)",
-        descricao: "Ergonomia e Conforto",
-        fotoEquipamento: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-fogao-a-gas-com-forno-para-cozinha-industrial-linha-stark-900-1800x980x900.png",
-        imgErgonomia: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTZt-E4kcWmUBT5eaj6tfUXnWNvUf4CbPX_Y6sgsPhewL6g5fI",
-        ergonomiaInstalacao: "Grelhas de ferro perfeitamente niveladas para deslizar panelas pesadas sem içar. Espaço livre frontal de 1m para agachamento com flexão de joelhos ao usar o forno.",
-        imgConforto: "https://img.magnific.com/vetores-gratis/colecao-de-culinaria-de-pessoas_52683-9462.jpg?semt=ais_hybrid&w=740&q=80",
-        medidasAntifadiga: "Redução do esforço de elevação ao mover caldeirões entre bocas no mesmo plano horizontal."
-      }
-    ],
-    limpeza: [
-      {
-        id: "limp-1",
-        equipamento: "iVario (Rational)",
-        norma: "RDC 216 / ANVISA",
-        frequencia: "Diária (após o uso)",
-        produtos: "Detergente neutro, esponja não abrasiva.",
-        pop: "1. Escoar líquidos pelo ralo embutido.\n2. Esfregar a cuba com detergente.\n3. Enxaguar usando a ducha retrátil.\n4. Secar e deixar a tampa semiaberta.",
-        foto: "https://www.rational-online.com/media/images/food/topshots-ivario/meat-ball-combi.jpg"
-      },
-      {
-        id: "limp-2",
-        equipamento: "Forno Combinado iCombi Pro 6-1/1 (Rational)",
-        norma: "RDC 216 / ANVISA",
-        frequencia: "Diária (via sistema)",
-        produtos: "Pastilhas Active Green e Care RATIONAL.",
-        pop: "1. Selecionar nível de sujeira no painel.\n2. Inserir pastilhas conforme indicado no visor (fluxo limpo, sem contato com sujidade pesada).\n3. Aguardar ciclo autolimpante (iCareSystem).\n4. Retirar resíduos retidos no filtro da calha.",
-        foto: "https://cdn.b4c.inf.br/storage/narcel/1000/forno-combinado-icombi-classic-6-11-rational17931090327248670.jpeg"
-      },
-      {
-        id: "limp-3",
-        equipamento: "Chapa Elétrica Linha Gourmet 700 (Alfatec)",
-        norma: "RDC 216 / ANVISA",
-        frequencia: "Diária (e entre rodadas)",
-        produtos: "Desengordurante específico, espátula.",
-        pop: "1. Raspar resíduos sólidos a quente para a gaveta coletora.\n2. Aplicar desengordurante (chapa morna) e esfregar.\n3. Remover resíduos com pano úmido (levar pano à rota de lavagem).\n4. Secar e untar com óleo.",
-        foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-chapa-eletrica-para-cozinha-industrial-linha-gourmet-700-400x750x280.png"
-      },
-      {
-        id: "limp-4",
-        equipamento: "Char Broiler a Gás Linha Stark 900 (Alfatec)",
-        norma: "RDC 216 / ANVISA",
-        frequencia: "Diária",
-        produtos: "Escova com cerdas de aço, desengordurante.",
-        pop: "1. Queimar resíduos (pirólise).\n2. Escovar as grelhas para remover carbonização.\n3. Retirar grelhas, defletores e gaveta e levar à pia de lavagem pesada (fluxo sujo).\n4. Secar e remontar na área de cocção (área limpa).",
-        foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-char-broiler-a-gas-para-cozinha-industrial-linha-stark-900-450x980x240.png"
-      },
-      {
-        id: "limp-5",
-        equipamento: "Fogão a Gás com Forno Stark (Alfatec)",
-        norma: "RDC 216 / ANVISA",
-        frequencia: "Diária",
-        produtos: "Detergente, desengordurante, esponjas.",
-        pop: "1. Retirar grelhas e queimadores; levar para imersão (fluxo sujo).\n2. Limpar a mesa do fogão e o interior do forno.\n3. Desobstruir bicos injetores.\n4. Enxaguar, secar e remontar tudo.",
-        foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-fogao-a-gas-com-forno-para-cozinha-industrial-linha-stark-900-1800x980x900.png"
-      }
-    ]
-  };
-
-  let currentTab = 'usuario';
-
-  window.switchTab = function(tabId, title, fromHistory) {
-    var modal = document.getElementById('detail-modal');
-    if (modal && modal.classList.contains('active')) {
-      modal.classList.remove('active');
+    function tratarErroImagem(img) {
+      img.onerror = null;
+      img.src = PLACEHOLDER_IMG;
     }
 
-    currentTab = tabId;
-    var pageTitle = document.getElementById('page-title');
-    if (pageTitle) pageTitle.innerText = title;
+    // GERADOR DE AVATARES ILUSTRADOS OFFLINE (SVG)
+    function criarAvatarSVG({ fundo, pele, cabelo, roupa, estiloCabelo, oculos = false }) {
+      const cabelos = {
+        longoOndulado: `<path d="M22 50 C22 20, 78 20, 78 50 L82 82 L18 82 Z" fill="${cabelo}"/>`,
+        curtoTopete: `<path d="M27 44 C27 22, 73 22, 73 44 C73 33, 62 28, 50 28 C38 28, 27 33, 27 44 Z" fill="${cabelo}"/><path d="M34 29 Q50 16 66 28 Q54 24 34 29 Z" fill="${cabelo}"/>`,
+        coque: `<circle cx="50" cy="18" r="11" fill="${cabelo}"/><path d="M26 46 C26 24, 74 24, 74 46 Z" fill="${cabelo}"/>`,
+        medioLiso: `<path d="M23 48 C23 21, 77 21, 77 48 L79 75 L21 75 Z" fill="${cabelo}"/>`,
+        cacheado: `<circle cx="30" cy="32" r="9" fill="${cabelo}"/><circle cx="42" cy="24" r="10" fill="${cabelo}"/><circle cx="58" cy="24" r="10" fill="${cabelo}"/><circle cx="70" cy="32" r="9" fill="${cabelo}"/><circle cx="27" cy="43" r="8" fill="${cabelo}"/><circle cx="73" cy="43" r="8" fill="${cabelo}"/>`
+      };
 
-    var contentArea = document.getElementById('app-main-content');
-    if (contentArea) contentArea.scrollTop = 0;
+      const oculosSvg = oculos
+        ? `<rect x="33" y="44" width="13" height="9" rx="3" fill="none" stroke="#2c3e50" stroke-width="2"/><rect x="54" y="44" width="13" height="9" rx="3" fill="none" stroke="#2c3e50" stroke-width="2"/><line x1="46" y1="48" x2="54" y2="48" stroke="#2c3e50" stroke-width="2"/>`
+        : '';
 
-    document.querySelectorAll('.nav-item').forEach(function(btn) {
-      btn.classList.remove('active');
-    });
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <rect width="100" height="100" fill="${fundo}"/>
+        ${cabelos[estiloCabelo] || ''}
+        <path d="M22 96 C22 76, 78 76, 78 96 Z" fill="${roupa}"/>
+        <path d="M43 75 L50 86 L57 75 Z" fill="#ffffff"/>
+        <rect x="44" y="62" width="12" height="15" rx="5" fill="${pele}"/>
+        <ellipse cx="50" cy="47" rx="19" ry="22" fill="${pele}"/>
+        <circle cx="41" cy="48" r="2.3" fill="#2c3e50"/>
+        <circle cx="59" cy="48" r="2.3" fill="#2c3e50"/>
+        ${oculosSvg}
+        <path d="M43 57 Q50 63 57 57" fill="none" stroke="#9e4738" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>`;
 
-    var targetBtn = document.getElementById('btn-nav-' + tabId);
-    if (targetBtn) {
-      targetBtn.classList.add('active');
+      return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
     }
 
-    document.querySelectorAll('.tab-pane').forEach(function(pane) {
-      pane.classList.remove('active');
-    });
+    // BANCO DE DADOS COMPLETO
+    const dbApp = {
+      usuarios: [
+        {
+          id: "usr-1",
+          nome: "Tainara",
+          email: "tainaracfreitas@gmail.com",
+          foto: criarAvatarSVG({
+            fundo: "#fde8e0",
+            pele: "#e0a382",
+            cabelo: "#3b2314",
+            roupa: "#d94e28",
+            estiloCabelo: "longoOndulado"
+          })
+        },
+        {
+          id: "usr-2",
+          nome: "Lucas Rodrigues",
+          email: "lucas.silveira.thor@gmail.com",
+          foto: criarAvatarSVG({
+            fundo: "#e3eef8",
+            pele: "#f1c29b",
+            cabelo: "#2c1e16",
+            roupa: "#2c3e50",
+            estiloCabelo: "curtoTopete",
+            oculos: true
+          })
+        },
+        {
+          id: "usr-3",
+          nome: "Lina",
+          email: "lrv.silva2010@gmail.com",
+          foto: criarAvatarSVG({
+            fundo: "#e6f5ee",
+            pele: "#c6865c",
+            cabelo: "#1f1612",
+            roupa: "#2a7b6f",
+            estiloCabelo: "coque"
+          })
+        },
+        {
+          id: "usr-4",
+          nome: "Caroline",
+          email: "ribeiroamorimcaroline@gmail.com",
+          foto: criarAvatarSVG({
+            fundo: "#fef3dc",
+            pele: "#f3c6a5",
+            cabelo: "#6e4228",
+            roupa: "#c85a32",
+            estiloCabelo: "medioLiso"
+          })
+        },
+        {
+          id: "usr-5",
+          nome: "Lucas Buarque",
+          email: "lucarbuarque2007@gmail.com",
+          foto: criarAvatarSVG({
+            fundo: "#ede9f8",
+            pele: "#d69a73",
+            cabelo: "#231915",
+            roupa: "#4a6572",
+            estiloCabelo: "cacheado"
+          })
+        }
+      ],
+      equipamentos: [
+        {
+          id: "eq-1",
+          nome: "iVario (Rational)",
+          potencia: "( 14 kW, trifásico)",
+          layout: "Requer ponto de água filtrada, ralo embutido ou grelha linear no piso. Exige coifa inercial devido ao vapor. Deve ficar na área central (ilha), facilitando a circulação.",
+          foto: "https://www.rational-online.com/media/images/food/topshots-ivario/meat-ball-combi.jpg"
+        },
+        {
+          id: "eq-2",
+          nome: "Forno Combinado iCombi Pro 6-1/1 (Rational)",
+          potencia: "~10,8 kW (Elétrico, trifásico)",
+          layout: "Necessita de ponto de água, esgoto para alta temperatura e exaustão. Posicionamento a 1,5m da bancada de apoio, mínimo de 10cm na lateral esquerda para manutenção.",
+          foto: "https://cdn.b4c.inf.br/storage/narcel/1000/forno-combinado-icombi-classic-6-11-rational17931090327248670.jpeg"
+        },
+        {
+          id: "eq-3",
+          nome: "Chapa Elétrica Linha Gourmet 700 (Alfatec)",
+          potencia: "2,8 kW (220V Monofásico)",
+          layout: "Equipamento de bancada/parede. Exige coifa. Não deve ser posicionado ao lado de equipamentos de refrigeração para evitar troca térmica no layout.",
+          foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-chapa-eletrica-para-cozinha-industrial-linha-gourmet-700-400x750x280.png"
+        },
+        {
+          id: "eq-4",
+          nome: "Char Broiler a Gás Linha Stark 900 (Alfatec)",
+          potencia: "9.569 kcal/h (GLP) 1 queimador",
+          layout: "Obrigatório sistema de exaustão de alta vazão (fumaça radiante). Ponto de gás com válvula de corte rápido acessível.",
+          foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-char-broiler-a-gas-para-cozinha-industrial-linha-stark-900-450x980x240.png"
+        },
+        {
+          id: "eq-5",
+          nome: "Fogão a Gás com Forno Stark (Alfatec)",
+          potencia: "37.299 kcal/h (GLP) 4 bocas",
+          layout: "Exige coifa de exaustão de grande porte. Requer tubulação de GLP dedicada e piso com inclinação e ralo próximo para facilitar a higienização.",
+          foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-fogao-a-gas-com-forno-para-cozinha-industrial-linha-stark-900-1800x980x900.png"
+        }
+      ],
+      funcionalidades: [
+        {
+          id: "func-1",
+          equipamento: "iVario (Rational)",
+          subtitulo: "Multifuncional de cocção",
+          foto: "https://www.rational-online.com/media/images/food/topshots-ivario/meat-ball-combi.jpg",
+          possibilidades: "Risotos, massas, carnes ensopadas, legumes, molhos e frituras.",
+          usoComum: "Cozinhas profissionais de grande produção, restaurantes, hotéis e cozinhas institucionais.",
+          maisRecomendado: "Preparações em grandes volumes e receitas que exigem controle preciso de temperatura.",
+          tipoCalor: "Aquecimento da cuba por sistema elétrico, com transferência de calor por contato e controle preciso de temperatura.",
+          tecnicasCoccao: "Fervura, fritura, braseamento, refogado e cozimento lento.",
+          destaque: "Reúne diferentes possibilidades de cocção em um único equipamento."
+        },
+        {
+          id: "func-2",
+          equipamento: "Forno Combinado iCombi Pro 6-1/1 (Rational)",
+          subtitulo: "Calor seco e vapor",
+          foto: "https://cdn.b4c.inf.br/storage/narcel/1000/forno-combinado-icombi-classic-6-11-rational17931090327248670.jpeg",
+          possibilidades: "Carnes assadas, frangos, peixes, legumes, pães, bolos e alimentos cozidos no vapor.",
+          usoComum: "Restaurantes, hotéis e cozinhas industriais.",
+          maisRecomendado: "Cozinhas que precisam preparar diferentes alimentos com padronização e controle de temperatura e umidade.",
+          tipoCalor: "Ar quente circulante, vapor ou combinação dos dois.",
+          tecnicasCoccao: "Assamento, cocção a vapor, gratinação, grelhamento e regeneração.",
+          destaque: "Combina calor seco e vapor em um único equipamento."
+        },
+        {
+          id: "func-3",
+          equipamento: "Chapa Elétrica Linha Gourmet 700 (Alfatec)",
+          subtitulo: "Cocção por contato direto",
+          foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-chapa-eletrica-para-cozinha-industrial-linha-gourmet-700-400x750x280.png",
+          possibilidades: "Hambúrgueres, carnes, ovos, panquecas, sanduíches e legumes.",
+          usoComum: "Lanchonetes, hamburguerias e restaurantes.",
+          maisRecomendado: "Preparações rápidas feitas em contato direto com uma superfície quente.",
+          tipoCalor: "Condução, pelo contato do alimento com a superfície metálica aquecida.",
+          tecnicasCoccao: "Grelhar, selar, dourar e saltear.",
+          destaque: "Superfície ampla que permite preparar vários alimentos simultaneamente."
+        },
+        {
+          id: "func-4",
+          equipamento: "Char Broiler a Gás Linha Stark 900 (Alfatec)",
+          subtitulo: "Grelhados e selagem",
+          foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-char-broiler-a-gas-para-cozinha-industrial-linha-stark-900-450x980x240.png",
+          possibilidades: "Carnes, hambúrgueres, frangos, peixes e legumes grelhados.",
+          usoComum: "Churrascarias, steakhouses e restaurantes especializados em carnes.",
+          maisRecomendado: "Preparações que precisam de marcas de grelha e acabamento característico de alimentos grelhados.",
+          tipoCalor: "Chama a gás e grelhas aquecidas, com transferência por radiação e condução.",
+          tecnicasCoccao: "Grelhar, selar e dourar.",
+          destaque: "Proporciona marcas de grelha e sabor característico do preparo sobre grelhas aquecidas."
+        },
+        {
+          id: "func-5",
+          equipamento: "Fogão a Gás com Forno Stark (Alfatec)",
+          subtitulo: "Fogão e forno integrados",
+          foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-fogao-a-gas-com-forno-para-cozinha-industrial-linha-stark-900-1800x980x900.png",
+          possibilidades: "Molhos, sopas, arroz, massas, carnes, refogados e preparações assadas.",
+          usoComum: "Restaurantes, cozinhas industriais, hotéis e cozinhas profissionais.",
+          maisRecomendado: "Cozinhas que precisam realizar diferentes preparações simultaneamente, utilizando as bocas e o forno.",
+          tipoCalor: "Nas bocas, aquecimento por chama; no forno, principalmente convecção e radiação.",
+          tecnicasCoccao: "Fervura, refogado, fritura, cozimento e assamento.",
+          destaque: "Combina fogão e forno em um único equipamento."
+        }
+      ],
+      ergonomia: [
+        {
+          id: "erg-1",
+          equipamento: "iVario (Rational)",
+          norma: "NR-17 (Ergonomia)",
+          descricao: "Ergonomia e Conforto",
+          fotoEquipamento: "https://www.rational-online.com/media/images/food/topshots-ivario/meat-ball-combi.jpg",
+          imgErgonomia: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTZt-E4kcWmUBT5eaj6tfUXnWNvUf4CbPX_Y6sgsPhewL6g5fI",
+          ergonomiaInstalacao: "Borda da cuba alinhada à altura da cintura (~90cm). Sistema de basculamento elétrico elimina o levantamento manual de panelas pesadas. Painel na altura dos olhos e ducha na altura das mãos.",
+          imgConforto: "https://img.magnific.com/vetores-gratis/colecao-de-culinaria-de-pessoas_52683-9462.jpg?semt=ais_hybrid&w=740&q=80",
+          medidasAntifadiga: "Evita rotação de tronco; basculamento reduz esforço lombar em 80%. Piso antiderrapante com grelha linear rebaixada na frente."
+        },
+        {
+          id: "erg-2",
+          equipamento: "Forno Combinado iCombi Pro 6-1/1 (Rational)",
+          norma: "NR-17 (Ergonomia)",
+          descricao: "Ergonomia e Conforto",
+          fotoEquipamento: "https://cdn.b4c.inf.br/storage/narcel/1000/forno-combinado-icombi-classic-6-11-rational17931090327248670.jpeg",
+          imgErgonomia: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTZt-E4kcWmUBT5eaj6tfUXnWNvUf4CbPX_Y6sgsPhewL6g5fI",
+          ergonomiaInstalacao: "Uso de suporte/base para que a última prateleira não ultrapasse 1,60m de altura, permitindo visão e manuseio seguro de assadeiras pesadas na altura do peito.",
+          imgConforto: "https://img.magnific.com/vetores-gratis/colecao-de-culinaria-de-pessoas_52683-9462.jpg?semt=ais_hybrid&w=740&q=80",
+          medidasAntifadiga: "Raio de abertura da porta livre para recuo do cozinheiro durante escape de vapor; reduz estresse térmico facial."
+        },
+        {
+          id: "erg-3",
+          equipamento: "Chapa Elétrica Linha Gourmet 700 (Alfatec)",
+          norma: "NR-17 (Ergonomia)",
+          descricao: "Ergonomia e Conforto",
+          fotoEquipamento: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-chapa-eletrica-para-cozinha-industrial-linha-gourmet-700-400x750x280.png",
+          imgErgonomia: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTZt-E4kcWmUBT5eaj6tfUXnWNvUf4CbPX_Y6sgsPhewL6g5fI",
+          ergonomiaInstalacao: "Superfície da chapa posicionada a 90cm - 95cm do piso. Concentrar itens de alto giro na faixa frontal (primeiros 40cm) para evitar hiperextensão de braços.",
+          imgConforto: "https://img.magnific.com/vetores-gratis/colecao-de-culinaria-de-pessoas_52683-9462.jpg?semt=ais_hybrid&w=740&q=80",
+          medidasAntifadiga: "Uso de tapete ergonômico emborrachado na frente da estação de chapeiro para diminuir fadiga de membros inferiores em pé."
+        },
+        {
+          id: "erg-4",
+          equipamento: "Char Broiler À Gás Linha Stark 900 (Alfatec)",
+          norma: "NR-17 (Ergonomia)",
+          descricao: "Ergonomia e Conforto",
+          fotoEquipamento: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-char-broiler-a-gas-para-cozinha-industrial-linha-stark-900-450x980x240.png",
+          imgErgonomia: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTZt-E4kcWmUBT5eaj6tfUXnWNvUf4CbPX_Y6sgsPhewL6g5fI",
+          ergonomiaInstalacao: "Instalação sem prateleiras suspensas acima para evitar esticar braços sobre grelha quente. Uso obrigatório de pinças e espátulas de cabo longo (35-40cm).",
+          imgConforto: "https://img.magnific.com/vetores-gratis/colecao-de-culinaria-de-pessoas_52683-9462.jpg?semt=ais_hybrid&w=740&q=80",
+          medidasAntifadiga: "Insuflamento de ar fresco focado no operador para compensar o calor radiante massivo do carvão vulcânico/gás."
+        },
+        {
+          id: "erg-5",
+          equipamento: "Fogão a Gás com Forno Stark (Alfatec)",
+          norma: "NR-17 (Ergonomia)",
+          descricao: "Ergonomia e Conforto",
+          fotoEquipamento: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-fogao-a-gas-com-forno-para-cozinha-industrial-linha-stark-900-1800x980x900.png",
+          imgErgonomia: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTZt-E4kcWmUBT5eaj6tfUXnWNvUf4CbPX_Y6sgsPhewL6g5fI",
+          ergonomiaInstalacao: "Grelhas de ferro perfeitamente niveladas para deslizar panelas pesadas sem içar. Espaço livre frontal de 1m para agachamento com flexão de joelhos ao usar o forno.",
+          imgConforto: "https://img.magnific.com/vetores-gratis/colecao-de-culinaria-de-pessoas_52683-9462.jpg?semt=ais_hybrid&w=740&q=80",
+          medidasAntifadiga: "Redução do esforço de elevação ao mover caldeirões entre bocas no mesmo plano horizontal."
+        }
+      ],
+      limpeza: [
+        {
+          id: "limp-1",
+          equipamento: "iVario (Rational)",
+          norma: "RDC 216 / ANVISA",
+          frequencia: "Diária (após o uso)",
+          produtos: "Detergente neutro, esponja não abrasiva.",
+          pop: "1. Escoar líquidos pelo ralo embutido.\n2. Esfregar a cuba com detergente.\n3. Enxaguar usando a ducha retrátil.\n4. Secar e deixar a tampa semiaberta.",
+          foto: "https://www.rational-online.com/media/images/food/topshots-ivario/meat-ball-combi.jpg"
+        },
+        {
+          id: "limp-2",
+          equipamento: "Forno Combinado iCombi Pro 6-1/1 (Rational)",
+          norma: "RDC 216 / ANVISA",
+          frequencia: "Diária (via sistema)",
+          produtos: "Pastilhas Active Green e Care RATIONAL.",
+          pop: "1. Selecionar nível de sujeira no painel.\n2. Inserir pastilhas conforme indicado no visor (fluxo limpo, sem contato com sujidade pesada).\n3. Aguardar ciclo autolimpante (iCareSystem).\n4. Retirar resíduos retidos no filtro da calha.",
+          foto: "https://cdn.b4c.inf.br/storage/narcel/1000/forno-combinado-icombi-classic-6-11-rational17931090327248670.jpeg"
+        },
+        {
+          id: "limp-3",
+          equipamento: "Chapa Elétrica Linha Gourmet 700 (Alfatec)",
+          norma: "RDC 216 / ANVISA",
+          frequencia: "Diária (e entre rodadas)",
+          produtos: "Desengordurante específico, espátula.",
+          pop: "1. Raspar resíduos sólidos a quente para a gaveta coletora.\n2. Aplicar desengordurante (chapa morna) e esfregar.\n3. Remover resíduos com pano úmido (levar pano à rota de lavagem).\n4. Secar e untar com óleo.",
+        foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-chapa-eletrica-para-cozinha-industrial-linha-gourmet-700-400x750x280.png"
+        },
+        {
+          id: "limp-4",
+          equipamento: "Char Broiler a Gás Linha Stark 900 (Alfatec)",
+          norma: "RDC 216 / ANVISA",
+          frequencia: "Diária",
+          produtos: "Escova com cerdas de aço, desengordurante.",
+          pop: "1. Queimar resíduos (pirólise).\n2. Escovar as grelhas para remover carbonização.\n3. Retirar grelhas, defletores e gaveta e levar à pia de lavagem pesada (fluxo sujo).\n4. Secar e remontar na área de cocção (área limpa).",
+          foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-char-broiler-a-gas-para-cozinha-industrial-linha-stark-900-450x980x240.png"
+        },
+        {
+          id: "limp-5",
+          equipamento: "Fogão a Gás com Forno Stark (Alfatec)",
+          norma: "RDC 216 / ANVISA",
+          frequencia: "Diária",
+          produtos: "Detergente, desengordurante, esponjas.",
+          pop: "1. Retirar grelhas e queimadores; levar para imersão (fluxo sujo).\n2. Limpar a mesa do fogão e o interior do forno.\n3. Desobstruir bicos injetores.\n4. Enxaguar, secar e remontar tudo.",
+          foto: "https://www.alfatecozinhas.com.br/wp-content/uploads/imagem-principal-fogao-a-gas-com-forno-para-cozinha-industrial-linha-stark-900-1800x980x900.png"
+        }
+      ]
+    };
 
-    var targetPane = document.getElementById('tab-' + tabId);
-    if (targetPane) {
-      targetPane.classList.add('active');
+    let currentTab = 'usuario';
+
+    window.switchTab = function(tabId, title, fromHistory) {
+      var modal = document.getElementById('detail-modal');
+      if (modal && modal.classList.contains('active')) {
+        modal.classList.remove('active');
+      }
+
+      currentTab = tabId;
+      var pageTitle = document.getElementById('page-title');
+      if (pageTitle) pageTitle.innerText = title;
+
+      var contentArea = document.getElementById('app-main-content');
+      if (contentArea) contentArea.scrollTop = 0;
+
+      document.querySelectorAll('.nav-item').forEach(function(btn) {
+        btn.classList.remove('active');
+      });
+
+      var targetBtn = document.getElementById('btn-nav-' + tabId);
+      if (targetBtn) {
+        targetBtn.classList.add('active');
+      }
+
+      document.querySelectorAll('.tab-pane').forEach(function(pane) {
+        pane.classList.remove('active');
+      });
+
+      var targetPane = document.getElementById('tab-' + tabId);
+      if (targetPane) {
+        targetPane.classList.add('active');
+      }
+
+      var searchInput = document.getElementById('global-search');
+      if (searchInput) searchInput.value = '';
+
+      if (!fromHistory && tabId !== 'usuario') {
+        try {
+          history.pushState({ tab: tabId, title: title, modal: false }, '');
+        } catch (e) {}
+      }
+
+      renderizarAbas();
+    };
+
+    function renderUsuario() {
+      var container = document.getElementById('lista-usuarios');
+      if (!container) return;
+      container.innerHTML = dbApp.usuarios.map(function(u) {
+        return `
+          <div class="user-card" onclick="window.switchTab('equipamentos', 'Equipamentos')">
+            <img class="user-avatar" src="${u.foto}" alt="${u.nome}">
+            <div class="user-info">
+              <div class="item-card-title">${u.nome}</div>
+              <div class="item-card-subtitle">${u.email}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
     }
 
-    var searchInput = document.getElementById('global-search');
-    if (searchInput) searchInput.value = '';
+    function renderEquipamentos(filtro) {
+      var container = document.getElementById('lista-equipamentos');
+      if (!container) return;
+      filtro = filtro || '';
+      var itens = dbApp.equipamentos.filter(function(item) {
+        return item.nome.toLowerCase().includes(filtro.toLowerCase()) || 
+               item.potencia.toLowerCase().includes(filtro.toLowerCase());
+      });
 
-    if (!fromHistory && tabId !== 'usuario') {
+      container.innerHTML = itens.map(function(item) {
+        return `
+          <div class="item-card" onclick="abrirDetalheEquipamento('${item.id}')">
+            <img src="${item.foto}" onerror="tratarErroImagem(this)" alt="${item.nome}">
+            <div class="item-card-body">
+              <div class="item-card-title">${item.nome}</div>
+              <div class="item-card-subtitle">${item.potencia}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderFuncionalidades(filtro) {
+      var container = document.getElementById('lista-funcionalidades');
+      if (!container) return;
+      filtro = filtro || '';
+      var itens = dbApp.funcionalidades.filter(function(item) {
+        return item.equipamento.toLowerCase().includes(filtro.toLowerCase()) || 
+               item.subtitulo.toLowerCase().includes(filtro.toLowerCase()) ||
+               item.possibilidades.toLowerCase().includes(filtro.toLowerCase());
+      });
+
+      container.innerHTML = itens.map(function(item) {
+        return `
+          <div class="item-card" onclick="abrirDetalheFuncionalidade('${item.id}')">
+            <img src="${item.foto}" onerror="tratarErroImagem(this)" alt="${item.equipamento}">
+            <div class="item-card-body">
+              <div class="item-card-title">${item.equipamento}</div>
+              <div class="item-card-subtitle">${item.subtitulo}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderErgonomia(filtro) {
+      var container = document.getElementById('lista-ergonomia');
+      if (!container) return;
+      filtro = filtro || '';
+      var itens = dbApp.ergonomia.filter(function(item) {
+        return item.equipamento.toLowerCase().includes(filtro.toLowerCase()) || 
+               item.descricao.toLowerCase().includes(filtro.toLowerCase());
+      });
+
+      container.innerHTML = itens.map(function(item) {
+        return `
+          <div class="item-card" onclick="abrirDetalheErgonomia('${item.id}')">
+            <img src="${item.fotoEquipamento}" onerror="tratarErroImagem(this)" alt="${item.equipamento}">
+            <div class="item-card-body">
+              <span class="badge-norma">${item.norma}</span>
+              <div class="item-card-title">${item.equipamento}</div>
+              <div class="item-card-subtitle">${item.descricao}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderLimpeza(filtro) {
+      var container = document.getElementById('lista-limpeza');
+      if (!container) return;
+      filtro = filtro || '';
+      var itens = dbApp.limpeza.filter(function(item) {
+        return item.equipamento.toLowerCase().includes(filtro.toLowerCase()) || 
+               item.frequencia.toLowerCase().includes(filtro.toLowerCase());
+      });
+
+      container.innerHTML = itens.map(function(item) {
+        return `
+          <div class="item-card" onclick="abrirDetalheLimpeza('${item.id}')">
+            <img src="${item.foto}" onerror="tratarErroImagem(this)" alt="${item.equipamento}">
+            <div class="item-card-body">
+              <span class="badge-norma" style="background-color: #d1fae5; color: #065f46;">${item.norma}</span>
+              <div class="item-card-title">${item.equipamento}</div>
+              <div class="item-card-subtitle">${item.frequencia}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filtrarItens() {
+      var termo = document.getElementById('global-search').value;
+      if (currentTab === 'equipamentos') renderEquipamentos(termo);
+      else if (currentTab === 'funcionalidades') renderFuncionalidades(termo);
+      else if (currentTab === 'ergonomia') renderErgonomia(termo);
+      else if (currentTab === 'limpeza') renderLimpeza(termo);
+    }
+
+    function renderizarAbas() {
+      renderUsuario();
+      renderEquipamentos();
+      renderFuncionalidades();
+      renderErgonomia();
+      renderLimpeza();
+    }
+
+    function registrarAberturaModal() {
+      var modal = document.getElementById('detail-modal');
+      if (modal) {
+        modal.scrollTop = 0;
+        modal.classList.add('active');
+      }
       try {
-        history.pushState({ tab: tabId, title: title, modal: false }, '');
+        history.pushState({ modal: true, tab: currentTab }, '');
       } catch (e) {}
     }
 
-    renderizarAbas();
-  };
+    // 1. Detalhes de Equipamentos (Em Caixas)
+    function abrirDetalheEquipamento(id) {
+      var item = dbApp.equipamentos.find(function(e) { return e.id === id; });
+      if (!item) return;
 
-  function renderUsuario() {
-    var container = document.getElementById('lista-usuarios');
-    if (!container) return;
-    container.innerHTML = dbApp.usuarios.map(function(u) {
-      return `
-        <div class="item-card" onclick="window.switchTab('equipamentos', 'Equipamento')" style="flex-direction: row; align-items: center; padding: 12px; gap: 12px;">
-          <img src="${u.foto}" onerror="tratarErroImagem(this)" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover;">
+      document.getElementById('modal-img-main').src = item.foto;
+      document.getElementById('modal-body-content').innerHTML = `
+        <h2 class="detail-title">${item.nome}</h2>
+        
+        <div class="func-group-card">
+          <div class="func-group-title">~Dados Técnicos & Layout~</div>
           <div>
-            <div class="item-card-title">${u.nome}</div>
-            <div class="item-card-subtitle">${u.email}</div>
+            <div class="func-field-label">Potência</div>
+            <div class="func-field-value">${item.potencia}</div>
+          </div>
+          <div>
+            <div class="func-field-label">Exigências de Layout</div>
+            <div class="func-field-value">${item.layout}</div>
+          </div>
+        </div>
+
+        <div class="func-group-card">
+          <div class="func-group-title">~Referência Visual~</div>
+          <div>
+            <div class="func-field-label">Link da Foto</div>
+            <div class="func-field-value">
+              <a href="${item.foto}" target="_blank" style="color: var(--primary-color); word-break: break-all;">${item.foto}</a>
+            </div>
           </div>
         </div>
       `;
-    }).join('');
-  }
 
-  function renderEquipamentos(filtro) {
-    var container = document.getElementById('lista-equipamentos');
-    if (!container) return;
-    filtro = filtro || '';
-    var itens = dbApp.equipamentos.filter(function(item) {
-      return item.nome.toLowerCase().includes(filtro.toLowerCase()) || 
-             item.potencia.toLowerCase().includes(filtro.toLowerCase());
-    });
-
-    container.innerHTML = itens.map(function(item) {
-      return `
-        <div class="item-card" onclick="abrirDetalheEquipamento('${item.id}')">
-          <img src="${item.foto}" onerror="tratarErroImagem(this)" alt="${item.nome}">
-          <div class="item-card-body">
-            <div class="item-card-title">${item.nome}</div>
-            <div class="item-card-subtitle">${item.potencia}</div>
-          </div>
-        </div>
-      `;
-    }).join('');
-  }
-
-  function renderFuncionalidades(filtro) {
-    var container = document.getElementById('lista-funcionalidades');
-    if (!container) return;
-    filtro = filtro || '';
-    var itens = dbApp.funcionalidades.filter(function(item) {
-      return item.equipamento.toLowerCase().includes(filtro.toLowerCase()) || 
-             item.possibilidadesUso.toLowerCase().includes(filtro.toLowerCase()) ||
-             item.tecnicasCoccao.toLowerCase().includes(filtro.toLowerCase());
-    });
-
-    container.innerHTML = itens.map(function(item) {
-      return `
-        <div class="item-card" onclick="abrirDetalheFuncionalidade('${item.id}')">
-          <img src="${item.foto}" onerror="tratarErroImagem(this)" alt="${item.equipamento}">
-          <div class="item-card-body">
-            <div class="item-card-title">${item.equipamento}</div>
-            <div class="item-card-subtitle">${item.tecnicasCoccao}</div>
-          </div>
-        </div>
-      `;
-    }).join('');
-  }
-
-  function renderErgonomia(filtro) {
-    var container = document.getElementById('lista-ergonomia');
-    if (!container) return;
-    filtro = filtro || '';
-    var itens = dbApp.ergonomia.filter(function(item) {
-      return item.equipamento.toLowerCase().includes(filtro.toLowerCase()) || 
-             item.descricao.toLowerCase().includes(filtro.toLowerCase());
-    });
-
-    container.innerHTML = itens.map(function(item) {
-      return `
-        <div class="item-card" onclick="abrirDetalheErgonomia('${item.id}')">
-          <img src="${item.fotoEquipamento}" onerror="tratarErroImagem(this)" alt="${item.equipamento}">
-          <div class="item-card-body">
-            <span class="badge-norma">${item.norma}</span>
-            <div class="item-card-title">${item.equipamento}</div>
-            <div class="item-card-subtitle">${item.descricao}</div>
-          </div>
-        </div>
-      `;
-    }).join('');
-  }
-
-  function renderLimpeza(filtro) {
-    var container = document.getElementById('lista-limpeza');
-    if (!container) return;
-    filtro = filtro || '';
-    var itens = dbApp.limpeza.filter(function(item) {
-      return item.equipamento.toLowerCase().includes(filtro.toLowerCase()) || 
-             item.frequencia.toLowerCase().includes(filtro.toLowerCase());
-    });
-
-    container.innerHTML = itens.map(function(item) {
-      return `
-        <div class="item-card" onclick="abrirDetalheLimpeza('${item.id}')">
-          <img src="${item.foto}" onerror="tratarErroImagem(this)" alt="${item.equipamento}">
-          <div class="item-card-body">
-            <span class="badge-norma" style="background-color: #d1fae5; color: #065f46;">${item.norma}</span>
-            <div class="item-card-title">${item.equipamento}</div>
-            <div class="item-card-subtitle">${item.frequencia}</div>
-          </div>
-        </div>
-      `;
-    }).join('');
-  }
-
-  function filtrarItens() {
-    var termo = document.getElementById('global-search').value;
-    if (currentTab === 'equipamentos') renderEquipamentos(termo);
-    else if (currentTab === 'funcionalidades') renderFuncionalidades(termo);
-    else if (currentTab === 'ergonomia') renderErgonomia(termo);
-    else if (currentTab === 'limpeza') renderLimpeza(termo);
-  }
-
-  function renderizarAbas() {
-    renderUsuario();
-    renderEquipamentos();
-    renderFuncionalidades();
-    renderErgonomia();
-    renderLimpeza();
-  }
-
-  function registrarAberturaModal() {
-    var modal = document.getElementById('detail-modal');
-    if (modal) {
-      modal.scrollTop = 0;
-      modal.classList.add('active');
+      registrarAberturaModal();
     }
-    try {
-      history.pushState({ modal: true, tab: currentTab }, '');
-    } catch (e) {}
-  }
 
-  function abrirDetalheEquipamento(id) {
-    var item = dbApp.equipamentos.find(function(e) { return e.id === id; });
-    if (!item) return;
+    // 2. Detalhes de Funcionalidades (Em Caixas igual ao print da Tainara)
+    function abrirDetalheFuncionalidade(id) {
+      var item = dbApp.funcionalidades.find(function(f) { return f.id === id; });
+      if (!item) return;
 
-    document.getElementById('modal-img-main').src = item.foto;
-    document.getElementById('modal-body-content').innerHTML = `
-      <h2 class="detail-title">${item.nome}</h2>
-      
-      <div class="detail-section">
-        <div class="detail-section-title">Potência</div>
-        <div class="detail-section-content">${item.potencia}</div>
-      </div>
+      document.getElementById('modal-img-main').src = item.foto;
+      document.getElementById('modal-body-content').innerHTML = `
+        <h2 class="detail-title">${item.equipamento}</h2>
 
-      <div class="detail-section">
-        <div class="detail-section-title">Exigências de Layout</div>
-        <div class="detail-section-content">${item.layout}</div>
-      </div>
-
-      <div class="detail-section">
-        <div class="detail-section-title">Link da Foto</div>
-        <div class="detail-section-content">
-          <a href="${item.foto}" target="_blank" style="color: var(--primary-color); word-break: break-all;">${item.foto}</a>
+        <div class="func-group-card">
+          <div class="func-group-title">~Aplicações na Cozinha~</div>
+          <div>
+            <div class="func-field-label">Possibilidades de uso</div>
+            <div class="func-field-value">${item.possibilidades}</div>
+          </div>
+          <div>
+            <div class="func-field-label">Uso mais comum</div>
+            <div class="func-field-value">${item.usoComum}</div>
+          </div>
+          <div>
+            <div class="func-field-label">Mais recomendado para</div>
+            <div class="func-field-value">${item.maisRecomendado}</div>
+          </div>
         </div>
-      </div>
-    `;
 
-    registrarAberturaModal();
-  }
-
-  function abrirDetalheFuncionalidade(id) {
-    var item = dbApp.funcionalidades.find(function(f) { return f.id === id; });
-    if (!item) return;
-
-    document.getElementById('modal-img-main').src = item.foto;
-    document.getElementById('modal-body-content').innerHTML = `
-      <h2 class="detail-title">${item.equipamento}</h2>
-      <div style="color: var(--text-muted); font-size: 0.85rem;">Funcionalidades</div>
-
-      <div class="detail-section">
-        <div class="detail-section-title">Possibilidades de uso</div>
-        <div class="detail-section-content">${item.possibilidadesUso}</div>
-      </div>
-
-      <div class="detail-section">
-        <div class="detail-section-title">Tipo de calor</div>
-        <div class="detail-section-content">${item.tipoCalor}</div>
-      </div>
-
-      <div class="detail-section">
-        <div class="detail-section-title">Técnicas de cocção</div>
-        <div class="detail-section-content">${item.tecnicasCoccao}</div>
-      </div>
-
-      <div class="detail-section">
-        <div class="detail-section-title">Uso mais comum</div>
-        <div class="detail-section-content">${item.usoMaisComum}</div>
-      </div>
-
-      <div class="detail-section">
-        <div class="detail-section-title">Mais recomendado para</div>
-        <div class="detail-section-content">${item.maisRecomendado}</div>
-      </div>
-
-      <div class="detail-section">
-        <div class="detail-section-title">Diferencial</div>
-        <div class="detail-section-content">${item.diferencial}</div>
-      </div>
-    `;
-
-    registrarAberturaModal();
-  }
-
-  function abrirDetalheErgonomia(id) {
-    var item = dbApp.ergonomia.find(function(e) { return e.id === id; });
-    if (!item) return;
-
-    document.getElementById('modal-img-main').src = item.fotoEquipamento;
-    document.getElementById('modal-body-content').innerHTML = `
-      <span class="badge-norma">${item.norma}</span>
-      <h2 class="detail-title">${item.descricao}</h2>
-      <div style="color: var(--text-muted); font-size: 0.9rem;">Equipamento: <strong>${item.equipamento}</strong></div>
-
-      <div class="detail-section">
-        <h3 style="font-size: 1.1rem; color: var(--text-main); margin-bottom: 8px;">Ergonomia de Instalação</h3>
-        <div class="detail-img-box">
-          <img src="${item.imgErgonomia}" onerror="tratarErroImagem(this)" alt="Ergonomia de Instalação">
+        <div class="func-group-card">
+          <div class="func-group-title">~Especificações Técnicas~</div>
+          <div>
+            <div class="func-field-label">Tipo de calor</div>
+            <div class="func-field-value">${item.tipoCalor}</div>
+          </div>
+          <div>
+            <div class="func-field-label">Técnicas de cocção</div>
+            <div class="func-field-value">${item.tecnicasCoccao}</div>
+          </div>
+          <div class="func-highlight-box">
+            <i class="fa-regular fa-lightbulb"></i>
+            <p>${item.destaque}</p>
+          </div>
         </div>
-        <div class="detail-section-content" style="margin-top: 10px;">${item.ergonomiaInstalacao}</div>
-      </div>
+      `;
 
-      <div class="detail-section">
-        <h3 style="font-size: 1.1rem; color: var(--text-main); margin-bottom: 8px;">Medidas Antifadiga e Conforto</h3>
-        <div class="detail-img-box">
-          <img src="${item.imgConforto}" onerror="tratarErroImagem(this)" alt="Medidas Antifadiga">
+      registrarAberturaModal();
+    }
+
+    // 3. Detalhes de Ergonomia (Em Caixas)
+    function abrirDetalheErgonomia(id) {
+      var item = dbApp.ergonomia.find(function(e) { return e.id === id; });
+      if (!item) return;
+
+      document.getElementById('modal-img-main').src = item.fotoEquipamento;
+      document.getElementById('modal-body-content').innerHTML = `
+        <span class="badge-norma">${item.norma}</span>
+        <h2 class="detail-title">${item.equipamento}</h2>
+
+        <div class="func-group-card">
+          <div class="func-group-title">~Ergonomia de Instalação~</div>
+          <div class="detail-img-box">
+            <img src="${item.imgErgonomia}" onerror="tratarErroImagem(this)" alt="Ergonomia de Instalação">
+          </div>
+          <div>
+            <div class="func-field-label">Postura e Altura</div>
+            <div class="func-field-value">${item.ergonomiaInstalacao}</div>
+          </div>
         </div>
-        <div class="detail-section-content" style="margin-top: 10px;">${item.medidasAntifadiga}</div>
-      </div>
-    `;
 
-    registrarAberturaModal();
-  }
+        <div class="func-group-card">
+          <div class="func-group-title">~Medidas Antifadiga e Conforto~</div>
+          <div class="detail-img-box">
+            <img src="${item.imgConforto}" onerror="tratarErroImagem(this)" alt="Medidas Antifadiga">
+          </div>
+          <div>
+            <div class="func-field-label">Prevenção e Conforto Operacional</div>
+            <div class="func-field-value">${item.medidasAntifadiga}</div>
+          </div>
+        </div>
+      `;
 
-  function abrirDetalheLimpeza(id) {
-    var item = dbApp.limpeza.find(function(l) { return l.id === id; });
-    if (!item) return;
+      registrarAberturaModal();
+    }
 
-    document.getElementById('modal-img-main').src = item.foto;
-    document.getElementById('modal-body-content').innerHTML = `
-      <span class="badge-norma" style="background-color: #d1fae5; color: #065f46;">${item.norma}</span>
-      <h2 class="detail-title">${item.equipamento}</h2>
-      <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 8px;">Rotina de Limpeza</div>
+    // 4. Detalhes de Rotinas de Limpeza (Em Caixas)
+    function abrirDetalheLimpeza(id) {
+      var item = dbApp.limpeza.find(function(l) { return l.id === id; });
+      if (!item) return;
 
-      <div class="detail-section">
-        <div class="detail-section-title">Frequência</div>
-        <div class="detail-section-content">${item.frequencia}</div>
-      </div>
+      document.getElementById('modal-img-main').src = item.foto;
+      document.getElementById('modal-body-content').innerHTML = `
+        <span class="badge-norma" style="background-color: #d1fae5; color: #065f46;">${item.norma}</span>
+        <h2 class="detail-title">${item.equipamento}</h2>
 
-      <div class="detail-section">
-        <div class="detail-section-title">Produtos Indicados</div>
-        <div class="detail-section-content">${item.produtos}</div>
-      </div>
+        <div class="func-group-card">
+          <div class="func-group-title">~Parâmetros de Higienização~</div>
+          <div>
+            <div class="func-field-label">Frequência</div>
+            <div class="func-field-value">${item.frequencia}</div>
+          </div>
+          <div>
+            <div class="func-field-label">Produtos Indicados</div>
+            <div class="func-field-value">${item.produtos}</div>
+          </div>
+        </div>
 
-      <div class="detail-section">
-        <div class="detail-section-title">POP (Procedimento Operacional Padrão) - Fluxo</div>
-        <div class="detail-section-content">${item.pop}</div>
-      </div>
-    `;
+        <div class="func-group-card">
+          <div class="func-group-title">~POP (Procedimento Operacional Padrão)~</div>
+          <div>
+            <div class="func-field-label">Fluxo de Limpeza</div>
+            <div class="func-field-value">${item.pop}</div>
+          </div>
+        </div>
+      `;
 
-    registrarAberturaModal();
-  }
+      registrarAberturaModal();
+    }
 
-  function fecharDetalhes(fromHistory) {
-    var modal = document.getElementById('detail-modal');
-    if (modal && modal.classList.contains('active')) {
-      modal.classList.remove('active');
-      if (!fromHistory && history.state && history.state.modal) {
-        try {
-          history.back();
-        } catch (e) {}
+    function fecharDetalhes(fromHistory) {
+      var modal = document.getElementById('detail-modal');
+      if (modal && modal.classList.contains('active')) {
+        modal.classList.remove('active');
+        if (!fromHistory && history.state && history.state.modal) {
+          try {
+            history.back();
+          } catch (e) {}
+        }
       }
     }
-  }
 
-  window.addEventListener('popstate', function(event) {
-    var modal = document.getElementById('detail-modal');
-    if (modal && modal.classList.contains('active')) {
-      fecharDetalhes(true);
-      return;
-    }
-    if (event.state && event.state.tab) {
-      window.switchTab(event.state.tab, event.state.title || 'OFFuncional', true);
-    } else if (currentTab !== 'usuario') {
-      window.switchTab('usuario', 'Usuário', true);
-    }
-  });
+    window.addEventListener('popstate', function(event) {
+      var modal = document.getElementById('detail-modal');
+      if (modal && modal.classList.contains('active')) {
+        fecharDetalhes(true);
+        return;
+      }
+      if (event.state && event.state.tab) {
+        window.switchTab(event.state.tab, event.state.title || 'OFFuncional', true);
+      } else if (currentTab !== 'usuario') {
+        window.switchTab('usuario', 'Usuário', true);
+      }
+    });
 
-  document.addEventListener('backbutton', function(e) {
-    var modal = document.getElementById('detail-modal');
-    if (modal && modal.classList.contains('active')) {
-      e.preventDefault();
-      fecharDetalhes(true);
-    } else if (currentTab !== 'usuario') {
-      e.preventDefault();
-      window.switchTab('usuario', 'Usuário', true);
-    }
-  }, false);
+    document.addEventListener('backbutton', function(e) {
+      var modal = document.getElementById('detail-modal');
+      if (modal && modal.classList.contains('active')) {
+        e.preventDefault();
+        fecharDetalhes(true);
+      } else if (currentTab !== 'usuario') {
+        e.preventDefault();
+        window.switchTab('usuario', 'Usuário', true);
+      }
+    }, false);
 
-  renderizarAbas();
-</script>
+    renderizarAbas();
+  </script>
 
 </body>
 </html>
