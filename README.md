@@ -1,6 +1,6 @@
 # 🍳 OFFuncional - Gestão & Ergonomia
 
-> Aplicativo Web Progressivo (PWA) para gestão técnica de equipamentos, conformidade ergonômica e rotinas de higienização em cozinhas profissionais.
+> Aplicativo para gestão técnica de equipamentos, conformidade ergonômica e rotinas de higienização em cozinhas profissionais.
 
 ---
 
